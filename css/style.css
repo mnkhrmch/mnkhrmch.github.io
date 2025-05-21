@@ -206,7 +206,7 @@ body {
 
 footer {
     background-color: var(--theme-dark);
-    padding: 4em 1em;
+    padding: 3em 1em 2em 1em;
     line-height: 1.5em;
     text-align: center;
     font-size: 0.9rem;

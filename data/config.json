@@ -1,6 +1,6 @@
 {
     "colors": {
-        "theme": "blue",
+        "theme": "green",
         "colorBook": {
             "custom": {
             },
@@ -67,8 +67,8 @@
         }
     },
     "contentTypes": {
-        "example": {"ja":"例","en":"examples"},
-        "test": {"ja":"テスト用","en":"for test"}
+        "math":{"ja":"数学の記事","en":"articles on mathematics"},
+        "diary":{"ja":"日記","en":"diaries"}
     },
     "htmlPartials": {
         "partialName": {
@@ -108,6 +108,18 @@
         "name": {
             "icon": "path/to/icon/image",
             "url": "url/to/your/account"
+        },
+        "x": {
+            "icon": "/images/icons/x-white.png",
+            "url": "https://x.com/girlwithahigoi"
+        },
+        "instagram": {
+            "icon": "/images/icons/instagram-white.png",
+            "url": "https://www.instagram.com/manakamogawa/"
+        },
+        "note": {
+            "icon": "/images/icons/note-white.png",
+            "url": "https://note.com/manaka_kamogawa"
         }
     }
 }
