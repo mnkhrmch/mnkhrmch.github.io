@@ -279,7 +279,7 @@ main {
         0.1em -0.1em 0.2em var(--theme-bg),
         -0.1em 0.1em 0.2em var(--theme-bg),
         -0.1em -0.1em 0.2em var(--theme-bg);
-    margin: 2em 4em;
+    margin: 2em min(4em,5vw);
     flex: 1;
 }
 
@@ -291,11 +291,12 @@ main {
     }
 
     #site-nav li {
-        margin: 0.3rem 0;
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 540px) {
     header {
         flex-direction: column;
         align-items: center;
