@@ -1,8 +1,18 @@
 {
     "colors": {
-        "theme": "green",
+        "theme": "custom",
         "colorBook": {
             "custom": {
+                "themeDarkColor": "rgb(14, 40, 143)",
+                "themeLightColor": "rgb(237, 247, 255)",
+                "themeTransparentDarkColor": "rgba(14, 40, 143, 0.8)",
+                "themeTransparentLightColor": "rgba(237, 247, 255, 0.9)",
+                "themeTextColor": "rgb(4, 13, 48)",
+                "themeBackgroundColor": "rgb(255,255,255)",
+                "themeTransparentBackground": "rgba(255,255,255,0.8)",
+                "accentColor": "#e74c3c",
+                "iconImageDark": "/images/icons/icon-blue.png",
+                "iconImageLight": "/images/icons/icon-white.png"
             },
             "blue": {
                 "themeDarkColor": "rgb(14, 40, 143)",
@@ -67,8 +77,9 @@
         }
     },
     "contentTypes": {
-        "math":{"ja":"数学の記事","en":"articles on mathematics"},
-        "diary":{"ja":"日記","en":"diaries"}
+        "diary":{"ja":"日記","en":"diaries"},
+        "writing":{"ja":"書き物","en":"writings"},
+        "math":{"ja":"数学の記事","en":"articles on mathematics"}
     },
     "htmlPartials": {
         "partialName": {

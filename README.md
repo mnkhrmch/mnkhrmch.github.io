@@ -265,7 +265,7 @@ diaryを作成してみましょう。
 
 保守性を意識して作成した。静的サイトでビルダーなしでできることを頑張ってやってみた。
 
-基本的に変更が想定されるものは `config.json` の編集（と悔しながら `update.py` の実行）によって対応できるようにした。また、変更箇所を明確にするために次のように整理している：
+基本的に変更が想定されるものは `config.json` の編集（と悔しながら `update_header.py` の実行）によって対応できるようにした。また、変更箇所を明確にするために次のように整理している：
 
 * 基本的な変更 → `/data/config.json`（テーマカラー、SNSリンクなど）
 * 外観の複雑な変更 → `/css/style.css`
@@ -302,7 +302,7 @@ diaryを作成してみましょう。
 
 * `README.md`: この説明書。愛情がこもっている
 
-* `update.py`: `<head>` を変更する際に実行
+* `update_header.py`: `<head>` を変更する際に実行
 
 * `/{{lang}}`: 言語ごとのHTMLファイル保管ディレクトリ
 
@@ -354,11 +354,11 @@ diaryを作成してみましょう。
 ### `<head>` の変更
 
 * SEO系metaタグや `main.js` の読み込みは各HTMLに記述
-* 一括変更は `/includes/head-ja.html`, `head-en.html` を編集し `update.py` を実行
-* `update.py` の使い方：
+* 一括変更は `/includes/head-ja.html`, `head-en.html` を編集し `update_header.py` を実行
+* `update_header.py` の使い方：
 
   ```sh
-  python update.py <lang>
+  python update_header.py <lang>
   ```
 * `<!-- KEY:kamo -->` と `<!-- ENDKEY -->` の間をテンプレートで置換
 
