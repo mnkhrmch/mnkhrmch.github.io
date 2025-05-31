@@ -50,7 +50,7 @@
     width: 100vw;
     height: 100vh;
     background-image: url('/images/icons/limit-bg.png');
-    background-size: min(45vw, 40vh);
+    background-size: 40vh;
     background-repeat: no-repeat;
     background-position: center;
     z-index: -200;
@@ -288,17 +288,10 @@ main {
 }
 
 /* media query */
-@media (max-width: 345px) {
-    #bg-image {
-        background-size: 35vw;
-        background-position: top 0px center;
-    }
-}
-
 @media (max-width: 530px) {
     #bg-image {
-        background-size: 35vw;
-        background-position: top 290px center;
+        background-size: 30vh;
+        background-position: top 320px center;
     }
 
     #site-nav ul{
