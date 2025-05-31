@@ -11,8 +11,8 @@
                 "themeBackgroundColor": "rgb(255,255,255)",
                 "themeTransparentBackground": "rgba(255,255,255,0.8)",
                 "accentColor": "#e74c3c",
-                "iconImageDark": "/images/icons/icon-blue.png",
-                "iconImageLight": "/images/icons/icon-white.png"
+                "iconImageDark": "/images/icons/limit-icon-blue.png",
+                "iconImageLight": "/images/icons/limit-icon-white.png"
             },
             "blue": {
                 "themeDarkColor": "rgb(14, 40, 143)",
