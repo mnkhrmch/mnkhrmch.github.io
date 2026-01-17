@@ -1,3 +1,7 @@
 baseURL = 'https://mnkhrmch.github.io/'
 languageCode = 'ja'
 title = "Manaka's Website"
+
+# ページネーション設定
+[pagination]
+pagerSize = 2

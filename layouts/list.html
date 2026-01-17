@@ -14,9 +14,9 @@
     </div>
     {{ end }}
 
-    {{ if .Pages }}
+    {{ if .Paginator.Pages }}
     <ul class="page-list">
-        {{ range .Pages }}
+        {{ range .Paginator.Pages }}
         <li class="page-item">
             <a href="{{ .RelPermalink }}" class="page-link">
                 <div class="page-header">
@@ -44,6 +44,42 @@
         </li>
         {{ end }}
     </ul>
+
+    {{ if or .Paginator.HasPrev .Paginator.HasNext }}
+    <nav class="pagination">
+        <div class="pagination-links">
+            {{ if .Paginator.HasPrev }}
+            <a href="{{ .Paginator.Prev.URL }}" class="pagination-link prev-link">
+                <span class="pagination-arrow">&lt;</span>
+                <span class="pagination-label">前へ</span>
+            </a>
+            {{ else }}
+            <span class="pagination-link prev-link disabled">
+                <span class="pagination-arrow">&lt;</span>
+                <span class="pagination-label">前へ</span>
+            </span>
+            {{ end }}
+
+            <span class="pagination-info">
+                <span class="pagination-current">{{ .Paginator.PageNumber }}</span>
+                <span class="pagination-separator">/</span>
+                <span class="pagination-total">{{ .Paginator.TotalPages }}</span>
+            </span>
+
+            {{ if .Paginator.HasNext }}
+            <a href="{{ .Paginator.Next.URL }}" class="pagination-link next-link">
+                <span class="pagination-label">次へ</span>
+                <span class="pagination-arrow">&gt;</span>
+            </a>
+            {{ else }}
+            <span class="pagination-link next-link disabled">
+                <span class="pagination-label">次へ</span>
+                <span class="pagination-arrow">&gt;</span>
+            </span>
+            {{ end }}
+        </div>
+    </nav>
+    {{ end }}
     {{ end }}
 </div>
 {{ end }}
