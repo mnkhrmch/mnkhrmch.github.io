@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="home">
+    <h2 class="section-title">
+        {{ $title := .Title }}
+        {{ $words := split $title " " }}
+        {{ range $words }}
+          <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
+        {{ end }}
+    </h2>
+    {{ if .Content }}
+    <div class="content">
+        {{ .Content }}
+    </div>
+    {{ end }}
+</div>
+{{ end }}
+
+{{/* ホームページ専用のCSSを追加する場合 */}}
+{{/* {{ define "page_css" }}
+<link rel="stylesheet" href="/css/home.css">
+{{ end }} */}}
+
+{{/* ホームページ専用のJavaScriptを追加する場合 */}}
+{{/* {{ define "scripts" }}
+<script src="/js/home.js"></script>
+{{ end }} */}}

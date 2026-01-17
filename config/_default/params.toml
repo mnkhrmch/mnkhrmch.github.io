@@ -1,0 +1,36 @@
+description = "真中遥道のウェブサイト"
+favicon = "/img/limit-icon-blue.svg"
+background_image = "/img/limit-bg-blue.svg"
+
+# サマリーの表示文字数（テンプレート用）
+summary_length = 200
+
+# 共通CSS
+common_css = [
+    "/css/main.css"
+]
+
+# 共通JavaScript
+common_js = [
+    "/js/main.js"
+]
+
+# ナビゲーションアイコン設定
+nav_icon_light = "/img/limit-icon-white.svg"
+nav_icon_dark = "/img/limit-icon-white.svg"
+
+# SNS設定
+[instagram]
+url = "https://instagram.com/manakamogawa"
+icon_light = "/img/instagram-white.svg"
+icon_dark = "/img/instagram-white.svg"
+
+[x]
+url = "https://x.com/GirlwithAHigoi"
+icon_light = "/img/x-white.svg"
+icon_dark = "/img/x-white.svg"
+
+[note]
+url = "https://note.com/manaka_kamogawa"
+icon_light = "/img/note-white.svg"
+icon_dark = "/img/note-white.svg"

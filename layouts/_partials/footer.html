@@ -1,0 +1,25 @@
+<footer>
+    <div class="footer-container">
+        <p>© 2026 Manaka Harumichi. All rights reserved.</p>
+        <nav id="sns-nav">
+            <ul>
+                <li><a href="{{ .Site.Params.x.url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ .Site.Params.x.icon_light | relURL }}"
+                            data-light-icon="{{ .Site.Params.x.icon_light | relURL }}"
+                            data-dark-icon="{{ .Site.Params.x.icon_dark | relURL }}" alt="X" class="sns-icon">
+                    </a></li>
+                <li><a href="{{ .Site.Params.note.url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ .Site.Params.note.icon_light | relURL }}"
+                            data-light-icon="{{ .Site.Params.note.icon_light | relURL }}"
+                            data-dark-icon="{{ .Site.Params.note.icon_dark | relURL }}" alt="Note" class="sns-icon">
+                    </a></li>
+                <li><a href="{{ .Site.Params.instagram.url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ .Site.Params.instagram.icon_light | relURL }}"
+                            data-light-icon="{{ .Site.Params.instagram.icon_light | relURL }}"
+                            data-dark-icon="{{ .Site.Params.instagram.icon_dark | relURL }}" alt="Instagram"
+                            class="sns-icon">
+                    </a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>

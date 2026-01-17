@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default " ja" }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{/* タイトル */}}
+    <title>{{ block "title" . }}{{ with .Params.Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
+
+    {{/* 説明 */}}
+    <meta name="description"
+        content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.Description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+
+    {{/* Favicon */}}
+    {{ if .Site.Params.favicon }}
+    <link rel="icon" type="image/x-icon" href="{{ .Site.Params.favicon | relURL }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ .Site.Params.favicon | relURL }}">
+    {{ else }}
+    {{ if (fileExists "static/favicon.ico") }}
+    <link rel="icon" type="image/x-icon" href="{{ " favicon.ico" | relURL }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ " favicon.ico" | relURL }}">
+    {{ end }}
+    {{ end }}
+
+    {{/* Apple Touch Icon */}}
+    {{ if (fileExists "static/apple-touch-icon.png") }}
+    <link rel="apple-touch-icon" href="{{ " apple-touch-icon.png" | relURL }}">
+    {{ end }}
+
+    {{/* CSS */}}
+    {{ if .Site.Params.common_css }}
+    {{ range .Site.Params.common_css }}
+    <link rel="stylesheet" href="{{ . | relURL }}">
+    {{ end }}
+    {{ end }}
+
+    {{/* カスタムCSS追加 */}}
+    {{ block "page_css" . }}{{ end }}
+
+    {{/* CSS変数 */}}
+    {{ with .Site.Params.background_image }}
+    <style>
+        :root {
+            --bg-image: url('{{ . | relURL }}');
+        }
+    </style>
+    {{ end }}
+
+    {{/* カスタムヘッド追加 */}}
+    {{ block "head" . }}{{ end }}
+</head>
+
+<body data-tags="{{ with .Params.tags }}{{ delimit . " " }}{{ end }}">
+    {{ partial "header.html" . }}
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+
+    {{/* JavaScript */}}
+    {{ if .Site.Params.common_js }}
+    {{ range .Site.Params.common_js }}
+    <script src="{{ . | relURL }}"></script>
+    {{ end }}
+    {{ end }}
+
+    {{/* カスタムスクリプト追加 */}}
+    {{ block "scripts" . }}{{ end }}
+</body>
+
+</html>

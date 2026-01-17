@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Diary on Manaka&#39;s Website</title>
+    <link>http://localhost:1313/diary/</link>
+    <description>Recent content in Diary on Manaka&#39;s Website</description>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Sat, 25 Jan 2025 11:20:00 +0900</lastBuildDate>
+    <atom:link href="http://localhost:1313/diary/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Weekend Reflection</title>
+      <link>http://localhost:1313/diary/2025-01-25-weekend-reflection/</link>
+      <pubDate>Sat, 25 Jan 2025 11:20:00 +0900</pubDate>
+      <guid>http://localhost:1313/diary/2025-01-25-weekend-reflection/</guid>
+      <description>&lt;p&gt;you are on a phone with your girl friend she&amp;rsquo;s upset.&#xA;she&amp;rsquo;s going off about something that you said.&#xA;she&amp;rsquo;ll never get your humor like I do.&#xA;I&amp;rsquo;m in my room. it&amp;rsquo;s a typical tuesday night.&#xA;you are on a phone with your girl friend she&amp;rsquo;s upset.&#xA;she&amp;rsquo;s going off about something that you said. she&amp;rsquo;ll never get your humor like I do.&#xA;I&amp;rsquo;m in my room. it&amp;rsquo;s a typical tuesday night.you are on a phone with your girl friend she&amp;rsquo;s upset. she&amp;rsquo;s going off about something that you said. she&amp;rsquo;ll never get your humor like I do.&#xA;I&amp;rsquo;m in my room. it&amp;rsquo;s a typical tuesday night.you are on a phone with your girl friend she&amp;rsquo;s upset. she&amp;rsquo;s going off about something that you said. she&amp;rsquo;ll never get your humor like I do.&#xA;I&amp;rsquo;m in my room. it&amp;rsquo;s a typical tuesday night.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Learning Progress</title>
+      <link>http://localhost:1313/diary/2025-01-22-learning-progress/</link>
+      <pubDate>Wed, 22 Jan 2025 16:45:00 +0900</pubDate>
+      <guid>http://localhost:1313/diary/2025-01-22-learning-progress/</guid>
+      <description>&lt;p&gt;最近、新しい技術を学んでいます。&lt;/p&gt;&#xA;&lt;p&gt;Hugoのテンプレートシステムや変数の使い方について、少しずつ理解が深まってきました。まだまだ知らないことが多いですが、継続的に学習を続けていきたいです。&lt;/p&gt;&#xA;&lt;p&gt;最近、新しい技術を学んでいます。&lt;/p&gt;&#xA;&lt;p&gt;Hugoのテンプレートシステムや変数の使い方について、少しずつ理解が深まってきました。まだまだ知らないことが多いですが、継続的に学習を続けていきたいです。&lt;/p&gt;&#xA;&lt;p&gt;最近、新しい技術を学んでいます。&lt;/p&gt;&#xA;&lt;p&gt;Hugoのテンプレートシステムや変数の使い方について、少しずつ理解が深まってきました。まだまだ知らないことが多いですが、継続的に学習を続けていきたいです。&lt;/p&gt;&#xA;&lt;p&gt;最近、新しい技術を学んでいます。&lt;/p&gt;&#xA;&lt;p&gt;Hugoのテンプレートシステムや変数の使い方について、少しずつ理解が深まってきました。まだまだ知らないことが多いですが、継続的に学習を続けていきたいです。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Daily Thoughts</title>
+      <link>http://localhost:1313/diary/2025-01-20-daily-thoughts/</link>
+      <pubDate>Mon, 20 Jan 2025 09:15:00 +0900</pubDate>
+      <guid>http://localhost:1313/diary/2025-01-20-daily-thoughts/</guid>
+      <description>&lt;p&gt;毎日の小さな発見や思考を記録することは、後で振り返る際に役立ちます。&lt;/p&gt;&#xA;&lt;p&gt;今日は特に何か特別なことがあったわけではありませんが、こうして日記を書くことで、自分の考えを整理できている気がします。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Web Development</title>
+      <link>http://localhost:1313/diary/2025-01-17-web-development/</link>
+      <pubDate>Fri, 17 Jan 2025 14:30:00 +0900</pubDate>
+      <guid>http://localhost:1313/diary/2025-01-17-web-development/</guid>
+      <description>&lt;p&gt;今日はウェブ開発について考えていました。&lt;/p&gt;&#xA;&lt;p&gt;Hugoを使った静的サイト生成は、シンプルで高速なサイトを作るのに適しています。テンプレートシステムも柔軟で、カスタマイズしやすいです。&lt;/p&gt;&#xA;&lt;p&gt;今後は、より多くのコンテンツを追加していきたいと思います。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>First Entry</title>
+      <link>http://localhost:1313/diary/2025-01-15-first-entry/</link>
+      <pubDate>Wed, 15 Jan 2025 10:00:00 +0900</pubDate>
+      <guid>http://localhost:1313/diary/2025-01-15-first-entry/</guid>
+      <description>&lt;p&gt;今日は初めての日記を書いています。Hugoでウェブサイトを作成し始めました。&lt;/p&gt;&#xA;&lt;p&gt;まだまだ慣れないことが多いですが、少しずつ進めていきたいと思います。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
