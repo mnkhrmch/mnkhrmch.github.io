@@ -1,0 +1,50 @@
+{{ define "main" }}
+<article class="single">
+    {{ if .Section }}
+    <nav class="article-back-nav">
+        <a href="{{ " /" | relURL }}{{ .Section }}/" class="nav-link back-link">&lt; 一覧に戻る</a>
+    </nav>
+    {{ end }}
+    <header class="article-header">
+        <h1 class="article-title">
+            {{ $title := .Title }}
+            {{ $words := split $title " " }}
+            {{ range $words }}
+            <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
+            {{ end }}
+        </h1>
+        {{ if .Date }}
+        <time class="article-date" datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
+        {{ end }}
+    </header>
+
+    <div class="article-content">
+        {{ .Content }}
+    </div>
+
+    {{ if .Section }}
+    <nav class="article-nav">
+        <div class="article-nav-links">
+            {{ if .Prev }}
+            <a href="{{ .Prev.RelPermalink }}" class="nav-link prev-link">
+                <span class="prev-arrow">&lt;</span>
+                <span class="prev-content">
+                    <span class="prev-label">前の記事</span>
+                    <span class="prev-title">{{ .Prev.Title }}</span>
+                </span>
+            </a>
+            {{ end }}
+            {{ if .Next }}
+            <a href="{{ .Next.RelPermalink }}" class="nav-link next-link">
+                <span class="next-content">
+                    <span class="next-label">次の記事</span>
+                    <span class="next-title">{{ .Next.Title }}</span>
+                </span>
+                <span class="next-arrow">&gt;</span>
+            </a>
+            {{ end }}
+        </div>
+    </nav>
+    {{ end }}
+</article>
+{{ end }}
