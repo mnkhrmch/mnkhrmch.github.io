@@ -1,4 +1,6 @@
-/* リセット */
+/* ============================================
+   リセット
+   ============================================ */
 * {
     margin: 0;
     padding: 0;
@@ -15,11 +17,14 @@ html {
     background-color: var(--color-bg);
 }
 
-/* CSS変数定義 - Light Mode (デフォルト) */
+/* ============================================
+   CSS変数定義
+   ============================================ */
+/* Light Mode (デフォルト) */
 :root {
     /* 色 */
     --color-primary: #0e288f;
-    --color-transparent: rgba(203, 213, 255, 0.5);
+    --color-transparent: rgba(209, 218, 253, 0.5);
     --color-primary-inverse: #ffffff;
     --color-text: #000000;
     --color-text-inverse: #ffffff;
@@ -30,10 +35,10 @@ html {
     --font-family-default: system-ui, -apple-system, sans-serif;
 }
 
-/* CSS変数定義 - Dark Mode */
+/* Dark Mode */
 [data-theme="dark"] {
     /* 色 */
-    --color-primary: #1938b7;
+    --color-primary: #3059fc;
     --color-transparent: rgba(14, 40, 143, 0.5);
     --color-primary-inverse: #ffffff;
     --color-text: #ffffff;
@@ -45,6 +50,30 @@ html {
     --font-family-default: system-ui, -apple-system, sans-serif;
 }
 
+/* ============================================
+   基本レイアウト
+   ============================================ */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    background-image: var(--bg-image, none);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40vh;
+    background-attachment: fixed;
+}
+
+main {
+    padding: 1em 5vw 0em 5vw;
+    flex: 1;
+}
+
+/* ============================================
+   Header
+   ============================================ */
 #header-top {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -58,6 +87,11 @@ html {
     text-align: center;
     grid-column: 2;
     justify-self: center;
+}
+
+.site-title a {
+    text-decoration: none;
+    color: var(--color-primary);
 }
 
 .theme-toggle {
@@ -89,40 +123,9 @@ html {
     display: inline-block;
 }
 
-.site-title a {
-    text-decoration: none;
-    color: var(--color-primary);
-}
-
-.site-title .initial {
-    font-size: 2em;
-    vertical-align: baseline;
-    display: inline;
-    color: transparent;
-    -webkit-text-stroke: 0.05em var(--color-primary);
-}
-
-.section-title .initial {
-    font-size: 1.5em;
-    vertical-align: baseline;
-    display: inline;
-    color: var(--color-primary);
-}
-
-.page-title .initial {
-    font-size: 1.5em;
-    vertical-align: baseline;
-    display: inline;
-    color: var(--color-primary);
-}
-
-.nav-icon {
-    height: 1em;
-    width: auto;
-    display: inline-block;
-    vertical-align: -0.2em;
-}
-
+/* ============================================
+   Navigation
+   ============================================ */
 #site-nav {
     padding: 0.3em;
     margin: 0em;
@@ -145,24 +148,16 @@ html {
     text-decoration: none;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    background-image: var(--bg-image, none);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 40vh;
-    background-attachment: fixed;
+.nav-icon {
+    height: 1em;
+    width: auto;
+    display: inline-block;
+    vertical-align: -0.2em;
 }
 
-main {
-    padding: 1em 5vw 0em 5vw;
-    flex: 1;
-}
-
+/* ============================================
+   Footer
+   ============================================ */
 footer {
     background-color: var(--color-primary);
     padding: 2em 1em 2em 1em;
@@ -200,6 +195,49 @@ footer a {
     display: block;
 }
 
+/* ============================================
+   タイポグラフィ
+   ============================================ */
+.site-title .initial {
+    font-size: 2em;
+    vertical-align: baseline;
+    display: inline;
+    color: transparent;
+    -webkit-text-stroke: 0.05em var(--color-primary);
+}
+
+.section-title {
+    font-family: var(--font-family-base);
+}
+
+.section-title .initial {
+    font-size: 1.5em;
+    vertical-align: baseline;
+    display: inline;
+    color: var(--color-primary);
+}
+
+.page-title .initial {
+    font-size: 1.5em;
+    vertical-align: baseline;
+    display: inline;
+    color: var(--color-primary);
+}
+
+.article-title .initial {
+    font-size: 1.5em;
+    vertical-align: baseline;
+    display: inline;
+    color: var(--color-primary);
+}
+
+/* ============================================
+   List Page Styles
+   ============================================ */
+.page-list {
+    list-style: none;
+}
+
 .page-item {
     background-color: var(--color-transparent);
     color: var(--color-text);
@@ -208,6 +246,12 @@ footer a {
     box-shadow: 0.1em 0.1em 0.2em var(--theme-tp-dark);
     border-radius: 0.1em;
     text-shadow: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-item:hover {
+    transform: translateY(-0.3em);
+    box-shadow: 0.2em 0.3em 0.4em rgba(0, 0, 0, 0.2);
 }
 
 .page-item a {
@@ -219,10 +263,6 @@ footer a {
 .page-item hr {
     border: 1px solid var(--color-text);
     margin: 0em 0em 0.5em 0em;
-}
-
-.section-title {
-    font-family: var(--font-family-base);
 }
 
 .page-header {
@@ -244,6 +284,150 @@ footer a {
     font-size: 0.9em;
 }
 
-.page-list {
-    list-style: none;
+/* ============================================
+   Single Page Styles
+   ============================================ */
+/* コンテナ */
+.single {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2em;
+}
+
+/* 戻りリンク */
+.article-back-nav {
+    margin-bottom: 1em;
+}
+
+.back-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.9em;
+    font-family: var(--font-family-base);
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* ヘッダー */
+.article-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid var(--color-text);
+}
+
+.article-title {
+    font-family: var(--font-family-base);
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.article-date {
+    flex: 0 0 auto;
+    font-family: var(--font-family-base);
+    font-size: 0.9em;
+    color: var(--color-text);
+}
+
+/* コンテンツ */
+.article-content {
+    font-family: var(--font-family-default);
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content p {
+    margin-bottom: 1em;
+}
+
+/* ナビゲーション */
+.article-nav {
+    margin-top: 1em;
+    padding-top: 1.5em;
+    border-top: 1px solid var(--color-text);
+}
+
+.article-nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 1em;
+}
+
+/* ナビゲーションリンク共通 */
+.nav-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* 前の記事 */
+.prev-link {
+    grid-column: 1;
+    justify-self: start;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.prev-arrow {
+    grid-column: 1;
+    align-self: center;
+    padding-right: 1em;
+}
+
+.prev-content {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+.prev-label {
+    font-size: 0.8em;
+}
+
+.prev-title {
+    font-size: 1em;
+}
+
+/* 次の記事 */
+.next-link {
+    grid-column: 2;
+    justify-self: end;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.next-content {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    text-align: right;
+}
+
+.next-label {
+    font-size: 0.8em;
+}
+
+.next-title {
+    font-size: 1em;
+}
+
+.next-arrow {
+    grid-column: 2;
+    align-self: center;
+    padding-left: 1em;
 }
