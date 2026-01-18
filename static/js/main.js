@@ -14,23 +14,6 @@
         } else {
             document.documentElement.removeAttribute('data-theme');
         }
-        
-        // iOS Safari対応: bodyの背景色を明示的に設定（CSS変数の更新を強制）
-        const body = document.body;
-        if (body) {
-            // CSS変数の更新を待ってから値を取得
-            requestAnimationFrame(() => {
-                const computedStyle = getComputedStyle(body);
-                const bgColor = computedStyle.getPropertyValue('--color-bg').trim();
-                if (bgColor) {
-                    body.style.backgroundColor = bgColor;
-                } else {
-                    // フォールバック: 直接値を設定
-                    body.style.backgroundColor = themeName === 'dark' ? '#1a1a1a' : '#ffffff';
-                }
-            });
-        }
-        
         updateThemeIcon(themeName);
         updateImages(themeName);
     }

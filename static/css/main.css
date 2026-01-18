@@ -13,6 +13,10 @@ body {
     padding: 0;
 }
 
+html {
+    background-color: var(--color-bg);
+}
+
 /* ============================================
    CSS変数定義
    ============================================ */
@@ -59,7 +63,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: var(--color-bg);
+    background-color: transparent;
     color: var(--color-text);
     font-family: var(--font-family-default);
 }
