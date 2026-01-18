@@ -1,7 +1,7 @@
 <header>
     <div id="header-top">
         <h1 class="site-title">
-            <a href="{{ "/" | relURL }}"><span class="initial">M</span>anaka <span class="initial">H</span>arumichi</a>
+            <a href="{{ " /" | relURL }}"><span class="initial">M</span>anaka <span class="initial">H</span>arumichi</a>
         </h1>
         <button id="theme-toggle" class="theme-toggle" aria-label="テーマ切り替え">
             <span class="theme-icon">☽</span>
@@ -10,7 +10,7 @@
 
     <nav id="site-nav">
         <ul>
-            <li class="nav-item">
+            <li class="nav-item {{ if .IsHome }}active{{ end }}">
                 <a href="{{ "/" | relURL }}">
                     <img src="{{ .Site.Params.nav_icon_light | relURL }}"
                         data-light-icon="{{ .Site.Params.nav_icon_light | relURL }}"
@@ -19,7 +19,7 @@
                 </a>
             </li>
             {{ range .Site.Sections }}
-            <li class="nav-item">
+            <li class="nav-item {{ if eq $.Section .Section }}active{{ end }}">
                 <a href="{{ .RelPermalink }}">
                     <img src="{{ $.Site.Params.nav_icon_light | relURL }}"
                         data-light-icon="{{ $.Site.Params.nav_icon_light | relURL }}"
