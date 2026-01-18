@@ -1,0 +1,11 @@
+<h{{ .Level }} id="{{ .Anchor }}" {{- with .Attributes.class }} class="{{ . }}" {{- end }}>
+    {{ if or (eq .Level 1) (eq .Level 2) }}
+    {{ $text := .Text }}
+    {{ $words := split $text " " }}
+    {{ range $words }}
+    <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
+    {{ end }}
+    {{ else }}
+    {{- .Text -}}
+    {{ end }}
+</h{{ .Level }}>

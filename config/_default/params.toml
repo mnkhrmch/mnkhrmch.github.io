@@ -2,8 +2,11 @@ description = "真中遥道のウェブサイト"
 favicon = "/img/limit-icon-blue.svg"
 background_image = "/img/limit-bg-blue.svg"
 
-# サマリーの表示文字数（テンプレート用）
-summary_length = 200
+# サマリーの表示文字数
+summary_length = 50
+
+# ホームページで表示する最近の記事数
+recent_posts_count = 5
 
 # 共通CSS
 common_css = [

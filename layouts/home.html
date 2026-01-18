@@ -1,15 +1,43 @@
 {{ define "main" }}
 <div class="home">
-    <h2 class="section-title">
-        {{ $title := .Title }}
-        {{ $words := split $title " " }}
-        {{ range $words }}
-          <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
+    <div class="home-header">
+        <h2 class="section-title">
+            {{ $title := .Title }}
+            {{ $words := split $title " " }}
+            {{ range $words }}
+            <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
+            {{ end }}
+        </h2>
+        {{/* 最終更新日 */}}
+        {{ $lastMod := .Lastmod }}
+        {{ range .Site.RegularPages }}
+        {{ if gt .Lastmod $lastMod }}
+        {{ $lastMod = .Lastmod }}
         {{ end }}
-    </h2>
+        {{ end }}
+        {{ if $lastMod }}
+        <div class="home-lastmod">
+            <time datetime="{{ $lastMod.Format " 2006-01-02" }}">最終更新: {{ $lastMod.Format "2006年1月2日" }}</time>
+        </div>
+        {{ end }}
+    </div>
     {{ if .Content }}
     <div class="content">
         {{ .Content }}
+    </div>
+    {{ end }}
+
+    {{/* 最近の更新を表示 */}}
+    {{ $recentCount := .Site.Params.recent_posts_count | default 5 }}
+    {{ $recentPages := first $recentCount (where .Site.RegularPages "Section" "!=" "") }}
+    {{ if $recentPages }}
+    <div class="home-recent-updates">
+        <h3 class="recent-updates-title"><span class="initial">最</span>近の更新</h3>
+        <ul class="page-list">
+            {{ range $recentPages }}
+            {{ partial "page-item.html" . }}
+            {{ end }}
+        </ul>
     </div>
     {{ end }}
 </div>

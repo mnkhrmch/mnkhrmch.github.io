@@ -33,8 +33,9 @@ html {
     --shadow-color: rgba(0, 0, 0, 0.7);
 
     /* フォント */
-    --font-family-base: "Courier New", Courier, monospace;
-    --font-family-default: system-ui, -apple-system, sans-serif;
+    --font-family-base: "Courier New", Courier,
+        monospace;
+    --font-family-default: "YuMincho", "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Hiragino Mincho", "Noto Serif JP", "Noto Serif CJK JP", serif;
 }
 
 /* Dark Mode */
@@ -47,11 +48,11 @@ html {
     --color-text: #ffffff;
     --color-text-inverse: #000000;
     --color-bg: #1a1a1a;
-    --shadow-color: rgba(255, 255, 255, 0.7);
+    --shadow-color: rgba(136, 136, 136, 0.7);
 
     /* フォント */
     --font-family-base: "Courier New", Courier, monospace;
-    --font-family-default: system-ui, -apple-system, sans-serif;
+    --font-family-default: "YuMincho", "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Hiragino Mincho", "Noto Serif JP", "Noto Serif CJK JP", serif;
 }
 
 /* ============================================
@@ -68,6 +69,7 @@ body {
     background-position: center;
     background-size: 40vh;
     background-attachment: fixed;
+    font-family: var(--font-family-default);
 }
 
 main {
@@ -231,6 +233,7 @@ footer a {
 
 .section-title {
     font-family: var(--font-family-base);
+    margin-bottom: 0.5em;
 }
 
 .section-title .initial {
@@ -254,10 +257,63 @@ footer a {
     color: var(--color-primary);
 }
 
+h1 .initial,
+h2 .initial {
+    font-size: 1.5em;
+    vertical-align: baseline;
+    display: inline;
+    color: var(--color-primary);
+}
+
+/* ============================================
+   Home Page Styles
+   ============================================ */
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1em;
+}
+
+.home-lastmod {
+    font-family: var(--font-family-base);
+    font-size: 0.9em;
+    color: var(--color-text);
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.home-lastmod time {
+    font-family: var(--font-family-base);
+}
+
+.home .content {
+    padding: 0em 2em;
+    margin-bottom: 2em;
+}
+
+.home-recent-updates {
+    margin-top: 2em;
+}
+
+.recent-updates-title {
+    font-family: var(--font-family-base);
+    font-size: 1.3em;
+    margin-bottom: 1em;
+    color: var(--color-text);
+}
+
+.recent-updates-title .initial {
+    font-size: 1.5em;
+    vertical-align: baseline;
+    display: inline;
+    color: var(--color-primary);
+}
+
 /* ============================================
    List Page Styles
    ============================================ */
-.page-list {
+   .page-list {
     list-style: none;
 }
 
@@ -284,8 +340,8 @@ footer a {
 }
 
 .page-item hr {
-    border: 1px solid var(--color-text);
-    margin: 0em 0em 0.5em 0em;
+    border: 0.8px solid var(--color-text);
+    margin: 0.2em 0em 0.5em 0em;
 }
 
 .page-header {
@@ -305,6 +361,86 @@ footer a {
     flex: 0 0 auto;
     font-family: var(--font-family-base);
     font-size: 0.9em;
+}
+
+.page-description {
+    font-family: var(--font-family-default);
+}
+
+/* ============================================
+   Markdown Content Styles
+   ============================================ */
+/* コンテンツコンテナ */
+.article-content {
+    font-family: var(--font-family-default);
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content p {
+    margin-bottom: 1em;
+}
+
+.home .content {
+    font-family: var(--font-family-default);
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.section-content {
+    padding: 0em 2em;
+    margin-bottom: 2em;
+}
+
+/* リンクのスタイル */
+.article-content a,
+.home .content a,
+.section-content a {
+    color: #777;
+    text-decoration: underline;
+}
+
+.article-content a:hover,
+.home .content a:hover,
+.section-content a:hover {
+    color: #666;
+}
+
+/* 引用のスタイル */
+.article-content blockquote,
+.home .content blockquote,
+.section-content blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #999;
+    box-shadow: 0 -0.1em 0.2em var(--shadow-color), 0.2em 0.2em 0.3em var(--shadow-color);
+    background-color: transparent;
+}
+
+/* 画像のスタイル */
+.article-content img,
+.home .content img,
+.section-content img {
+    display: block;
+    margin: 1em auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/* リストのスタイル */
+.article-content ul,
+.article-content ol,
+.home .content ul,
+.home .content ol,
+.section-content ul,
+.section-content ol {
+    padding-left: 2em;
+}
+
+.article-content li,
+.home .content li,
+.section-content li {
+    margin-left: 0.5em;
 }
 
 /* ============================================
@@ -361,17 +497,6 @@ footer a {
     font-family: var(--font-family-base);
     font-size: 0.9em;
     color: var(--color-text);
-}
-
-/* コンテンツ */
-.article-content {
-    font-family: var(--font-family-default);
-    line-height: 1.8;
-    color: var(--color-text);
-}
-
-.article-content p {
-    margin-bottom: 1em;
 }
 
 /* ナビゲーション */
@@ -643,14 +768,23 @@ footer a {
         font-size: 1.3em;
     }
 
+    h1 .initial,
+    h2 .initial,
+    h3 .initial,
+    h4 .initial,
+    h5 .initial,
+    h6 .initial {
+        font-size: 1.3em;
+    }
+
     .site-title .initial {
         font-size: 1.7em;
     }
 
     /* テーマ切り替えトグルボタン */
     .theme-toggle {
-        width: 1.4em;
-        height: 1.4em;
-        font-size: 1em;
+        width: 1.5em;
+        height: 1.5em;
+        font-size: 1.2em;
     }
 }

@@ -1,7 +1,7 @@
 <header>
     <div id="header-top">
         <h1 class="site-title">
-            <a href="{{ " /" | relURL }}"><span class="initial">M</span>anaka <span class="initial">H</span>arumichi</a>
+            <a href="{{ "/" | relURL }}"><span class="initial">M</span>anaka <span class="initial">H</span>arumichi</a>
         </h1>
         <button id="theme-toggle" class="theme-toggle" aria-label="テーマ切り替え">
             <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -15,7 +15,7 @@
     <nav id="site-nav">
         <ul>
             <li class="nav-item {{ if .IsHome }}active{{ end }}">
-                <a href="{{ " /" | relURL }}">
+                <a href="{{ "/" | relURL }}">
                     <img src="{{ .Site.Params.nav_icon_light | relURL }}"
                         data-light-icon="{{ .Site.Params.nav_icon_light | relURL }}"
                         data-dark-icon="{{ .Site.Params.nav_icon_dark | relURL }}" alt="" class="nav-icon">
