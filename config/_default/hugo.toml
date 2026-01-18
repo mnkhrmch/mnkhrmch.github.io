@@ -4,4 +4,4 @@ title = "Manaka's Website"
 
 # ページネーション設定
 [pagination]
-pagerSize = 2
+pagerSize = 10
