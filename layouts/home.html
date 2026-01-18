@@ -1,13 +1,13 @@
 {{ define "main" }}
 <div class="home">
     <div class="home-header">
-        <h2 class="section-title">
-            {{ $title := .Title }}
-            {{ $words := split $title " " }}
-            {{ range $words }}
-            <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
-            {{ end }}
-        </h2>
+    <h2 class="section-title">
+        {{ $title := .Title }}
+        {{ $words := split $title " " }}
+        {{ range $words }}
+          <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
+        {{ end }}
+    </h2>
         {{/* 最終更新日 */}}
         {{ $lastMod := .Lastmod }}
         {{ range .Site.RegularPages }}
