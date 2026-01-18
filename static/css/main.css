@@ -125,7 +125,10 @@ main {
 }
 
 .theme-icon {
-    display: inline-block;
+    display: block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
 }
 
 /* ============================================
