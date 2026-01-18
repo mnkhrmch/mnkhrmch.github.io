@@ -392,6 +392,16 @@ h2 .initial {
     margin-bottom: 1em;
 }
 
+/* 箇条書きの直前のpタグのmargin-bottomを削除 */
+.article-content p:has(+ ul),
+.article-content p:has(+ ol),
+.home .content p:has(+ ul),
+.home .content p:has(+ ol),
+.section-content p:has(+ ul),
+.section-content p:has(+ ol) {
+    margin-bottom: 0;
+}
+
 .home .content {
     font-family: var(--font-family-default);
     line-height: 1.8;
@@ -401,6 +411,13 @@ h2 .initial {
 .section-content {
     padding: 0em 2em;
     margin-bottom: 2em;
+}
+
+/* 見出しのスタイル */
+.article-content h3,
+.home .content h3,
+.section-content h3 {
+    margin-top: 0.5em;
 }
 
 /* リンクのスタイル */
@@ -423,9 +440,17 @@ h2 .initial {
 .section-content blockquote {
     margin: 1em 0;
     padding: 0.5em 1em;
+    border: 1px solid #999;
     border-left: 4px solid #999;
-    box-shadow: 0 -0.1em 0.2em var(--shadow-color), 0.2em 0.2em 0.3em var(--shadow-color);
+    box-shadow: 0.2em 0.2em 0.3em var(--shadow-color);
     background-color: transparent;
+}
+
+/* 引用内の最後のpタグのmargin-bottomを削除 */
+.article-content blockquote p:last-child,
+.home .content blockquote p:last-child,
+.section-content blockquote p:last-child {
+    margin-bottom: 0;
 }
 
 /* 画像のスタイル */
