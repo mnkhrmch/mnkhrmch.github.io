@@ -1,0 +1,12 @@
+{{ $pdf := .Page.Resources.Get (.Get "file") }}
+{{ if $pdf }}
+<div class="pdf-link-container">
+    <a href="{{ $pdf.RelPermalink }}" class="pdf-link">
+        <img src="/img/paperclip.svg" data-light-icon="/img/paperclip.svg" data-dark-icon="/img/paperclip-white.svg"
+            alt="" class="pdf-link-icon">
+        <span class="pdf-link-filename">{{ $pdf.Name }}</span>
+    </a>
+</div>
+{{ else }}
+<p style="color: red;">エラー: PDFファイル "{{ .Get "file" }}" が見つかりませんでした。</p>
+{{ end }}

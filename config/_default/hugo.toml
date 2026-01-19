@@ -9,3 +9,4 @@ pagerSize = 20
 # Markdownレンダリング設定
 [markup.goldmark.renderer]
 hardWraps = true
+unsafe = true

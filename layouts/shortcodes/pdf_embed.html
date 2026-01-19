@@ -1,0 +1,8 @@
+{{ $pdf := .Page.Resources.Get (.Get "file") }}
+{{ if $pdf }}
+<div class="pdf-embed-container">
+    <iframe src="{{ $pdf.RelPermalink }}" class="pdf-embed" style="border: none;"></iframe>
+</div>
+{{ else }}
+<p style="color: red;">エラー: PDFファイル "{{ .Get "file" }}" が見つかりませんでした。</p>
+{{ end }}

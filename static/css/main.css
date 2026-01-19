@@ -731,7 +731,7 @@ h2 .initial {
 
     /* Single Page */
     .single {
-        padding: 0.5em;
+        padding: 0.5em 0.5em 1.5em 0.5em;
     }
 
     .article-header {
@@ -831,4 +831,94 @@ h2 .initial {
         height: 1.5em;
         font-size: 1.2em;
     }
+
+    /* PDF埋め込み - モバイルでは高さを調整 */
+    .pdf-embed {
+        height: 500px;
+        min-height: 400px;
+    }
+
+    /* モバイルではPDF埋め込みがうまく動作しない場合があるため、
+       ダウンロードリンクを強調表示 */
+    .pdf-embed-container {
+        margin-bottom: 1.5em;
+    }
+}
+
+/* ============================================
+   PDF Embed
+   ============================================ */
+.pdf-embed-container {
+    margin: 1em 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-embed {
+    width: 100%;
+    height: 800px;
+    display: block;
+}
+
+/* ============================================
+   PDF Link
+   ============================================ */
+.pdf-link-container {
+    margin: 1em 0;
+}
+
+.pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.2em 1em;
+    border: 1px solid var(--color-text);
+    border-radius: 4px;
+    text-decoration: none !important;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+    background-color: var(--color-bg);
+}
+
+.pdf-link:link,
+.pdf-link:visited,
+.pdf-link:active {
+    text-decoration: none !important;
+    color: var(--color-text);
+}
+
+.pdf-link:hover {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse) !important;
+    text-decoration: none !important;
+}
+
+/* ダークモードでもホバー時に色が変わるように */
+[data-theme="dark"] .pdf-link:hover {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+}
+
+/* ホバー時にアイコンを逆の色に変更 */
+/* ライトモード: 黒 → 白 */
+.pdf-link:hover .pdf-link-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* ダークモード: 白 → 黒 */
+[data-theme="dark"] .pdf-link:hover .pdf-link-icon {
+    filter: brightness(0);
+}
+
+.pdf-link-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: filter 0.3s ease;
+}
+
+.pdf-link-filename {
+    font-family: var(--font-family-base);
+    font-size: 0.9em;
 }
