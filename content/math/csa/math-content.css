@@ -1,0 +1,98 @@
+/* CSS for LaTeX-converted HTML content */
+
+/* Theorem-like environments */
+.theorem {
+  border: 1px solid #333;
+  padding: 1em;
+  margin: 1em 0;
+  background-color: #fafafa;
+  border-radius: 4px;
+}
+
+.theorem.dfn {
+  border-left: 4px solid #2196F3;
+}
+
+.theorem.thm {
+  border-left: 4px solid #4CAF50;
+}
+
+.theorem.prop {
+  border-left: 4px solid #FF9800;
+}
+
+.theorem.lem {
+  border-left: 4px solid #9C27B0;
+}
+
+.theorem.cor {
+  border-left: 4px solid #00BCD4;
+}
+
+.theorem.eg {
+  border-left: 4px solid #795548;
+  background-color: #f5f5f5;
+}
+
+.theorem.rmk {
+  border-left: 4px solid #607D8B;
+  background-color: #f5f5f5;
+}
+
+.theorem.set {
+  border-left: 4px solid #E91E63;
+  background-color: #fff3e0;
+}
+
+/* Proof environment */
+.proof {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 2px solid #999;
+  background-color: #fafafa;
+}
+
+/* Section styling */
+h2, h3, h4 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Lists inside theorems */
+.theorem ul, .theorem ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+/* Images from lateximage (tikz diagrams etc) */
+.lateximage {
+  display: block;
+  margin: 1em auto;
+  text-align: center;
+}
+
+.lateximage img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .theorem {
+    background-color: #2a2a2a;
+    border-color: #555;
+  }
+
+  .theorem.eg, .theorem.rmk {
+    background-color: #333;
+  }
+
+  .theorem.set {
+    background-color: #3a2a1a;
+  }
+
+  .proof {
+    background-color: #2a2a2a;
+    border-color: #666;
+  }
+}
