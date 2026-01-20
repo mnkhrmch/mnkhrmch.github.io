@@ -50,3 +50,7 @@ Temporary Items
 
 # cursor
 .cursor/
+
+# tex
+*.synctex.gz
+*.dvi
