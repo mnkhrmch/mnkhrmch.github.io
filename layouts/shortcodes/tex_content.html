@@ -1,0 +1,39 @@
+{{/*
+  tex_content shortcode
+  Usage: {{< tex_content file="filename.html" >}}
+
+  This shortcode includes HTML content generated from LaTeX files.
+  The file should be in the same page bundle directory.
+  MathJax is automatically loaded for math rendering.
+*/}}
+
+{{ $file := .Get "file" | default "content.html" }}
+{{ $resource := .Page.Resources.GetMatch $file }}
+
+{{/* Load MathJax for math rendering */}}
+<script>
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+</script>
+
+{{ if $resource }}
+  <div class="tex-content">
+    {{ $resource.Content | safeHTML }}
+  </div>
+{{ else }}
+  <p class="error">Error: Could not find {{ $file }}</p>
+{{ end }}

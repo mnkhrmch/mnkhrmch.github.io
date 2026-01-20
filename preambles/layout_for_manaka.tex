@@ -1,0 +1,10 @@
+\pagestyle{fancy}
+
+%↓は\leftmarkとしてセクションの名前を表示するため
+\makeatletter
+\renewcommand{\sectionmark}[1]{\markboth{\ifnum \c@secnumdepth>\z@\thesection\hskip 1em\relax\fi #1}{}}
+\makeatother
+
+\rhead{真中遥道~@GirlwithAHigoi}
+\lhead{\leftmark}
+\renewcommand{\headrulewidth}{0.0pt}

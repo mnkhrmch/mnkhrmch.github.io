@@ -10,7 +10,8 @@ recent_posts_count = 5
 
 # 共通CSS
 common_css = [
-    "/css/main.css"
+    "/css/main.css",
+    "/css/math-content.css"
 ]
 
 # 共通JavaScript

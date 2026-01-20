@@ -1,0 +1,31 @@
+\theoremstyle{definition}
+\newtheorem{Def}{定義}
+\renewcommand{\theDef}{\arabic{Def}}
+%\renewcommand{\theDef}{\arabic{section}.\arabic{Def}}
+\newenvironment{dfn}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{定義 \theDef.#1}}}{\end{itembox}}
+\newenvironment{thm}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{定理 \theDef.#1}}}{\end{itembox}}
+\newenvironment{prop}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{命題 \theDef.#1}}}{\end{itembox}}
+\newenvironment{lem}[1][]{\refstepcounter{Def}\begin{itembox}[l]{\textbf{補題 \theDef.#1}}}{\end{itembox}}
+\newenvironment{cor}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{系 \theDef.#1}}}{\end{itembox}}
+\newenvironment{fact}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{事実 \theDef.#1}}}{\end{itembox}}
+\newenvironment{sug}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{案 \theDef.#1}}}{\end{itembox}}
+\newenvironment{prob}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{問題 \theDef.#1}}}{\end{itembox}}
+\newenvironment{exr}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{演習 \theDef.#1}}}{\end{itembox}}
+\newenvironment{rev}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{復習 \theDef.#1}}}{\end{itembox}}
+\newenvironment{egbox}[1][]{\refstepcounter{Def} \begin{itembox}[l]{\textbf{例 \theDef.#1}}}{\end{itembox}}
+\newenvironment*{set}[1][]{\begin{itembox}[l]{\textbf{$\S$\thesection の設定}}}{\end{itembox}}
+\newtheorem*{ans}{解答}
+\newtheorem{rmk}[Def]{注意}
+\newtheorem{eg}[Def]{例}
+\renewcommand{\proofname}{\bf{証明}}
+%番号なし
+\newenvironment*{dfn*}[1][]{\begin{itembox}[l]{\textbf{定義 #1}}}{\end{itembox}}
+\newenvironment*{thm*}[1][]{\begin{itembox}[l]{\textbf{定理 #1}}}{\end{itembox}}
+\newenvironment*{prop*}[1][]{\begin{itembox}[l]{\textbf{命題 #1}}}{\end{itembox}}
+\newenvironment*{lem*}[1][]{\begin{itembox}[l]{\textbf{補題 #1}}}{\end{itembox}}
+\newenvironment*{cor*}[1][]{\begin{itembox}[l]{\textbf{系 #1}}}{\end{itembox}}
+\newenvironment*{fact*}[1][]{\begin{itembox}[l]{\textbf{事実 #1}}}{\end{itembox}}
+\newenvironment*{sug*}[1][]{\begin{itembox}[l]{\textbf{案 #1}}}{\end{itembox}}
+\newenvironment*{prob*}[1][]{\begin{itembox}[l]{\textbf{問題 #1}}}{\end{itembox}}
+\newenvironment*{exr*}[1][]{\begin{itembox}[l]{\textbf{演習 #1}}}{\end{itembox}}
+\newenvironment*{rev*}[1][]{\begin{itembox}[l]{\textbf{復習 #1}}}{\end{itembox}}
