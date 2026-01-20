@@ -32,6 +32,8 @@ trap cleanup EXIT
 cp "$INPUT_FILE" "$BUILD_DIR/"
 cp -r "$PROJECT_ROOT/preambles" "$BUILD_DIR/"
 cp "$SCRIPT_DIR/tex4ht.cfg" "$BUILD_DIR/"
+cp "$SCRIPT_DIR/mathjax-macros.tex" "$BUILD_DIR/"
+cp "$PROJECT_ROOT/preambles/operators_and_letters.tex" "$BUILD_DIR/"
 
 # Change to build directory
 cd "$BUILD_DIR"
@@ -48,7 +50,7 @@ cat "$BASENAME.tex" >> "build_$BASENAME.tex"
 # -d: output directory
 echo "Converting $INPUT_FILE to HTML..."
 mkdir -p output
-make4ht -ul -c tex4ht.cfg -d output "build_$BASENAME.tex" "mathjax" 2>&1 || true
+make4ht -ul -c tex4ht.cfg -d output "build_$BASENAME.tex" "mathjax, tikz+" 2>&1 || true
 
 # Rename output file to original name
 if [ -f "output/build_$BASENAME.html" ]; then
