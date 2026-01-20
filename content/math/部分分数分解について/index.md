@@ -6,6 +6,6 @@ description: ""
 ---
 　塾講のアルバイトで部分分数分解について考えることがあり以前それをPDFにまとめたのだが，それがAhlfors複素解析(2章1-4,p33,34)に出てきた命題の別証明になっていて嬉しかったので載せておく．本当は実係数多項式の話まで持ち込みたかったがそちらの証明はまだできていない．
 
-{{< pdf_link file="部分分数分解について.pdf" text="PDFをダウンロード" >}}
+{{< pdf_embed_js file="tex/sample_lualatex.pdf" >}}
 
-{{< pdf_embed file="部分分数分解について.pdf" >}}
+{{< pdf_link file="tex/sample_lualatex.pdf" text="PDFをダウンロード" >}}

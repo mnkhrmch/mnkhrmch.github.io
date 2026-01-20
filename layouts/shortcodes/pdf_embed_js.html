@@ -1,0 +1,10 @@
+{{/* pdf.js を使ったPDF埋め込み用ショートコード
+使い方: {{< pdfjs_embed file="foo.pdf">}} */}}
+    {{ $pdf := .Page.Resources.Get (.Get "file") }}
+    {{ if $pdf }}
+    <div class="pdfjs-viewer" data-pdf-url="{{ $pdf.RelPermalink }}">
+        <div class="pdfjs-viewer-loading">PDFを読み込んでいます...</div>
+    </div>
+    {{ else }}
+    <p style="color: red;">エラー: PDFファイル "{{ .Get "file" }}" が見つかりませんでした。</p>
+    {{ end }}

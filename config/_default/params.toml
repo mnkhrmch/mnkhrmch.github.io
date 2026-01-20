@@ -15,7 +15,8 @@ common_css = [
 
 # 共通JavaScript
 common_js = [
-    "/js/main.js"
+    "/js/main.js",
+    "/js/pdfjs-viewer.js"
 ]
 
 # ナビゲーションアイコン設定

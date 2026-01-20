@@ -1,0 +1,73 @@
+% sample_xelatex.tex
+% XeLaTeX 用のサンプルファイル
+% コンパイル例: xelatex sample_xelatex.tex
+
+\documentclass[a4paper,11pt]{article}
+
+% フォント関連（XeLaTeX）
+\usepackage{fontspec}
+\usepackage{xeCJK}
+
+% 欧文フォント（お好みで変更可）
+% 環境に存在するフォント名に変更してください。
+% 例: \setmainfont{Times New Roman}
+% 今回は安全のためコメントアウトしておく。
+% \setmainfont{TeX Gyre Termes}
+
+% 日本語フォント（macOS想定）
+% うまくいかなければ「Hiragino Mincho ProN」や
+% 「IPAexMincho」など、実際に入っているフォント名に変えてください。
+\setCJKmainfont{Hiragino Mincho ProN}
+
+% 数式
+\usepackage{amsmath,amssymb,amsthm,bm}
+% 定理環境
+\newtheorem{theorem}{定理}
+
+\title{XeLaTeX サンプル：部分分数分解について}
+\author{真中 遥道}
+\date{2021年4月30日}
+
+\begin{document}
+
+\maketitle
+
+これは XeLaTeX でコンパイルするためのサンプルです。
+日本語と数式が PDF.js 上でも正しく表示されるかを確認するために作成しました。
+
+\section{部分分数分解}
+
+塾講師のアルバイトで有理関数の積分を教えるときに、
+部分分数分解についてある知見を得た。
+調べてみたところ割と有名事実みたいだが、
+自力で証明できたのが嬉しかったので記録を残しておく。
+
+複素数体 $\mathbb{C}$ 上の多項式 $f(x), g(x)$ を考える。
+$\deg f = m$, $\deg g = n$ とし、$g(x)$ の因数分解を
+\[
+  g(x) = a \prod_{i=1}^{k} (x - \alpha_i)^{\lambda_i}
+  \quad (a \neq 0,\; i \neq j \Rightarrow \alpha_i \neq \alpha_j)
+\]
+と書けるとする。
+
+\begin{theorem}[部分分数分解の定理]
+  任意の有理式 $f(x)/g(x)$ に対して複素数
+  $a_0, \ldots, a_{m-n}, b_{1,1}, \ldots, b_{k,\lambda_k}$ が存在し，
+  \[
+    \frac{f(x)}{g(x)}
+    = \sum_{i=0}^{m-n} a_i x^i
+    + \sum_{i=1}^{k} \sum_{j=1}^{\lambda_i}
+    \frac{b_{i,j}}{(x - \alpha_i)^j}
+  \]
+  と部分分数分解できる。
+  なお $m - n < 0$ のとき右辺第一項は空和として $0$ とみなす。
+\end{theorem}
+
+この PDF を `pdffonts` コマンドで確認すると，
+XeLaTeX によって埋め込まれたフォントに対して
+`uni = yes` となっていることが期待される。
+その状態であれば，PDF.js 経由でブラウザに埋め込んだときも
+日本語と数式が正しく表示されやすい。
+
+\end{document}
+

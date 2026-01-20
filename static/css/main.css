@@ -832,16 +832,11 @@ h2 .initial {
         font-size: 1.2em;
     }
 
-    /* PDF埋め込み - モバイルでは高さを調整 */
-    .pdf-embed {
-        height: 500px;
-        min-height: 400px;
-    }
-
-    /* モバイルではPDF埋め込みがうまく動作しない場合があるため、
-       ダウンロードリンクを強調表示 */
+    /* PDF埋め込み - モバイルではアスペクト比を調整 */
     .pdf-embed-container {
         margin-bottom: 1.5em;
+        padding-top: 160%;
+        /* 縦長のPDFに余裕を持たせた比率 */
     }
 }
 
@@ -850,15 +845,47 @@ h2 .initial {
    ============================================ */
 .pdf-embed-container {
     margin: 1em 0;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
 }
 
 .pdf-embed {
     width: 100%;
-    height: 800px;
-    display: block;
+    max-width: 100%;
+    height: auto;
+    border: none;
+}
+
+/* ============================================
+   PDF.js Viewer
+   ============================================ */
+.pdfjs-viewer {
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid var(--color-text);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .pdfjs-viewer {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.pdfjs-viewer-loading {
+    font-family: var(--font-family-base);
+    font-size: 0.9em;
+    color: var(--color-text);
+}
+
+.pdfjs-pages {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+}
+
+.pdfjs-page-canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 6px var(--shadow-color);
 }
 
 /* ============================================
