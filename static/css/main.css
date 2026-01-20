@@ -480,6 +480,14 @@ h2 .initial {
     margin-left: 0.5em;
 }
 
+/* 水平線のスタイル */
+.article-content hr,
+.home .content hr,
+.section-content hr {
+    margin: 1em 0;
+    border: 0.5px solid var(--color-text);
+}
+
 /* ============================================
    Single Page Styles
    ============================================ */
@@ -754,10 +762,6 @@ h2 .initial {
     .article-nav .next-link {
         grid-column: 1;
         justify-self: stretch;
-    }
-
-    .article-nav .next-content {
-        text-align: left;
     }
 
     /* ページネーション */
