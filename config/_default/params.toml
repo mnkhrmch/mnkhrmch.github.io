@@ -3,7 +3,7 @@ favicon = "/img/limit-icon-blue.svg"
 background_image = "/img/limit-bg-blue.svg"
 
 # サマリーの表示文字数
-summary_length = 50
+summary_length = 100
 
 # ホームページで表示する最近の記事数
 recent_posts_count = 5
