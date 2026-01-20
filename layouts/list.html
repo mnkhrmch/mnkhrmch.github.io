@@ -2,10 +2,7 @@
 <div class="list">
     <h2 class="section-title">
         {{ $title := .Title }}
-        {{ $words := split $title " " }}
-        {{ range $words }}
-        <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
-        {{ end }}
+        <span class="initial">{{ substr $title 0 1 }}</span>{{ substr $title 1 }}
     </h2>
 
     {{ if .Content }}

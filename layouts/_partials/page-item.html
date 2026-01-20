@@ -3,12 +3,9 @@
         <div class="page-header">
             <h3 class="page-title">
                 {{ $title := .Title }}
-                {{ $words := split $title " " }}
-                {{ range $words }}
-                <span class="initial">{{ substr . 0 1 }}</span>{{ substr . 1 }}
-                {{ end }}
+                <span class="initial">{{ substr $title 0 1 }}</span>{{ substr $title 1 }}
             </h3>
-            {{ if .Date }}
+            {{ if and .Date (ne .Section "diary") }}
             <time class="page-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
             {{ end }}
         </div>
