@@ -20,6 +20,43 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: >-
+            scheme-basic
+            make4ht
+            tex4ht
+            luatex
+            luatexbase
+            fontspec
+            amsmath
+            amssymb
+            amsfonts
+            mathrsfs
+            amsthm
+            latexsym
+            stmaryrd
+            bm
+            physics
+            tcolorbox
+            tikz
+            tikz-cd
+            pgf
+            graphicx
+            comment
+            environ
+            etoolbox
+            xcolor
+            luatexja
+
+      - name: Convert TeX to HTML
+        run: |
+          chmod +x tex2html/build.sh
+          # Convert all .tex files that need HTML conversion
+          # Add your tex files here as needed
+          # Example: ./tex2html/build.sh content/math/csa/index.tex content/math/csa/
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
