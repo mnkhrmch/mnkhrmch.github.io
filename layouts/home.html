@@ -70,9 +70,11 @@ window.SITE_ARTICLES = [
     }
     {{ end }}
 ];
+{{ $suggestedPostsCount := .Site.Params.suggested_posts_count | default 4 }}
+window.SUGGESTED_POSTS_COUNT = {{ $suggestedPostsCount }};
 document.addEventListener('DOMContentLoaded', function() {
     if (window.renderSuggestPageItems) {
-        window.renderSuggestPageItems('random-articles-home', window.SITE_ARTICLES, 4);
+        window.renderSuggestPageItems('random-articles-home', window.SITE_ARTICLES, window.SUGGESTED_POSTS_COUNT);
     }
 });
 </script>
