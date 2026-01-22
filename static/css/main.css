@@ -33,8 +33,8 @@ html {
     --shadow-color: rgba(0, 0, 0, 0.7);
 
     /* フォント */
-    --font-family-base: "Courier New", Courier,
-        monospace;
+    --font-family-base: sans-serif;
+    --font-family-heading: "Courier New", Courier, monospace;
     --font-family-default: "YuMincho", "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Hiragino Mincho", "Noto Serif JP", "Noto Serif CJK JP", serif;
 }
 
@@ -51,7 +51,7 @@ html {
     --shadow-color: rgba(136, 136, 136, 0.7);
 
     /* フォント */
-    --font-family-base: "Courier New", Courier, monospace;
+    --font-family-base: sans-serif;/*"Courier New", Courier, monospace;*/
     --font-family-default: "YuMincho", "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Hiragino Mincho", "Noto Serif JP", "Noto Serif CJK JP", serif;
 }
 
@@ -84,7 +84,7 @@ body::before {
 }
 
 main {
-    padding: 1em 5vw 0em 5vw;
+    padding: 1em 5vw 1em 5vw;
     flex: 1;
 }
 
@@ -100,7 +100,7 @@ main {
 }
 
 .site-title {
-    font-family: var(--font-family-base);
+    font-family: "Courier New";
     text-align: center;
     grid-column: 2;
     justify-self: center;
@@ -151,7 +151,7 @@ main {
     padding: 0.5em;
     margin: 0em;
     background-color: var(--color-header-footer-bg);
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-heading);
     color: var(--color-header-footer-text);
 }
 
@@ -234,6 +234,10 @@ footer a {
 /* ============================================
    タイポグラフィ
    ============================================ */
+.site-title {
+    font-family: var(--font-family-heading);
+}
+
 .site-title .initial {
     font-size: 2em;
     vertical-align: baseline;
@@ -277,53 +281,51 @@ h2 .initial {
 }
 
 /* ============================================
-   Home Page Styles
+   Components: content-block (共通構造)
    ============================================ */
-.home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1em;
-}
-
-.home-lastmod {
-    font-family: var(--font-family-base);
-    font-size: 0.9em;
-    color: var(--color-text);
-    opacity: 0.7;
-    flex-shrink: 0;
-}
-
-.home-lastmod time {
-    font-family: var(--font-family-base);
-}
-
-.home .content {
-    padding: 0em 2em;
+.content-block {
     margin-bottom: 2em;
 }
 
-.home-recent-updates {
-    margin-top: 2em;
-    margin-bottom: 2em;
-}
-
-.recent-updates-title {
+.content-block-title {
     font-family: var(--font-family-base);
     font-size: 1.3em;
     margin-bottom: 1em;
     color: var(--color-text);
 }
 
-.recent-updates-title .initial {
+.content-block-title .initial {
     font-size: 1.5em;
     vertical-align: baseline;
     display: inline;
     color: var(--color-primary);
 }
 
+.content-block-body {
+    padding: 0em 0em 0em 1em;
+}
+
 /* ============================================
-   List Page Styles
+   Components: btn-outline (共通ボタンスタイル)
+   ============================================ */
+.btn-outline {
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border: 2px solid var(--color-primary);
+    border-radius: 0.4em;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    text-decoration: none;
+}
+
+/* ============================================
+   Components: page-item / page-list
    ============================================ */
 .page-list {
     list-style: none;
@@ -345,7 +347,7 @@ h2 .initial {
     box-shadow: 0.2em 0.3em 0.4em var(--shadow-color);
 }
 
-.page-item a {
+.page-item .page-link {
     text-decoration: none;
     color: var(--color-text);
     font-family: var(--font-family-base);
@@ -380,65 +382,204 @@ h2 .initial {
 }
 
 /* ============================================
-   Markdown Content Styles
+   Components: suggest-section
    ============================================ */
-/* コンテンツコンテナ */
-.article-content {
-    font-family: var(--font-family-default);
-    line-height: 1.8;
+.suggest-section {
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.suggest-label {
+    font-size: 0.9em;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.suggest-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}
+
+.suggest-link {
+    display: grid;
+    align-items: center;
+    font-size: 0.9em;
+    padding: 0.8em 1em;
+}
+
+.suggest-link-content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    justify-items: center;
+}
+
+.suggest-link-title {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+}
+
+.suggest-link-label {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-bottom: 0.5em;
+}
+
+/* ============================================
+   Components: pdf-embed
+   ============================================ */
+.pdf-embed-container {
+    margin: 1em 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-embed {
+    width: 100%;
+    height: 800px;
+    display: block;
+}
+
+/* ============================================
+   Components: pdf-link
+   ============================================ */
+.pdf-link-container {
+    margin: 1em 0;
+}
+
+.pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.2em 1em;
+    border: 1px solid var(--color-text);
+    border-radius: 0.4em;
+    text-decoration: none !important;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+    background-color: var(--color-bg);
+}
+
+.pdf-link:link,
+.pdf-link:visited,
+.pdf-link:active {
+    text-decoration: none !important;
     color: var(--color-text);
 }
 
-.article-content p {
-    margin-bottom: 1em;
+.pdf-link:hover {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse) !important;
+    text-decoration: none !important;
 }
 
+/* ダークモードでもホバー時に色が変わるように */
+[data-theme="dark"] .pdf-link:hover {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+}
+
+/* ホバー時にアイコンを逆の色に変更 */
+/* ライトモード: 黒 → 白 */
+.pdf-link:hover .pdf-link-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* ダークモード: 白 → 黒 */
+[data-theme="dark"] .pdf-link:hover .pdf-link-icon {
+    filter: brightness(0);
+}
+
+.pdf-link-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: filter 0.3s ease;
+}
+
+.pdf-link-filename {
+    font-family: var(--font-family-base);
+    font-size: 0.9em;
+}
+
+/* ============================================
+   Components: image-figure
+   ============================================ */
+.image-figure {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.image-figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+.image-figure figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.9em;
+    color: var(--color-text);
+    opacity: 0.8;
+}
+
+/* ============================================
+   Home Page Styles
+   ============================================ */
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1em;
+}
+
+.home-lastmod {
+    font-family: var(--font-family-base);
+    font-size: 0.9em;
+    color: var(--color-text);
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.home-lastmod time {
+    font-family: var(--font-family-base);
+}
+
+/* ============================================
+   Markdown Content Styles
+   ============================================ */
 /* 箇条書きの直前のpタグのmargin-bottomを削除 */
 .article-content p:has(+ ul),
 .article-content p:has(+ ol),
-.home .content p:has(+ ul),
-.home .content p:has(+ ol),
-.section-content p:has(+ ul),
-.section-content p:has(+ ol) {
+.markdown-content p:has(+ ul),
+.markdown-content p:has(+ ol) {
     margin-bottom: 0;
-}
-
-.home .content {
-    font-family: var(--font-family-default);
-    line-height: 1.8;
-    color: var(--color-text);
-}
-
-.section-content {
-    padding: 0em 2em;
-    margin-bottom: 2em;
 }
 
 /* 見出しのスタイル */
 .article-content h3,
-.home .content h3,
-.section-content h3 {
+.markdown-content h3 {
     margin-top: 0.5em;
 }
 
 /* リンクのスタイル */
 .article-content a,
-.home .content a,
-.section-content a {
+.markdown-content a {
     color: #777;
     text-decoration: underline;
 }
 
 .article-content a:hover,
-.home .content a:hover,
-.section-content a:hover {
+.markdown-content a:hover {
     color: #666;
 }
 
 /* 引用のスタイル */
 .article-content blockquote,
-.home .content blockquote,
-.section-content blockquote {
+.markdown-content blockquote {
     margin: 1em 0;
     padding: 0.5em 1em;
     border: 1px solid #999;
@@ -449,15 +590,13 @@ h2 .initial {
 
 /* 引用内の最後のpタグのmargin-bottomを削除 */
 .article-content blockquote p:last-child,
-.home .content blockquote p:last-child,
-.section-content blockquote p:last-child {
+.markdown-content blockquote p:last-child {
     margin-bottom: 0;
 }
 
 /* 画像のスタイル */
 .article-content img,
-.home .content img,
-.section-content img {
+.markdown-content img {
     display: block;
     margin: 1em auto;
     max-width: 50%;
@@ -467,23 +606,19 @@ h2 .initial {
 /* リストのスタイル */
 .article-content ul,
 .article-content ol,
-.home .content ul,
-.home .content ol,
-.section-content ul,
-.section-content ol {
+.markdown-content ul,
+.markdown-content ol {
     padding-left: 2em;
 }
 
 .article-content li,
-.home .content li,
-.section-content li {
+.markdown-content li {
     margin-left: 0.5em;
 }
 
 /* 水平線のスタイル */
 .article-content hr,
-.home .content hr,
-.section-content hr {
+.markdown-content hr {
     margin: 1em 0;
     border: 0.5px solid var(--color-text);
 }
@@ -495,7 +630,7 @@ h2 .initial {
 .single {
     max-width: 800px;
     margin: 0 auto;
-    padding: 2em;
+    padding: 1em;
 }
 
 /* 戻りリンク */
@@ -504,21 +639,8 @@ h2 .initial {
 }
 
 .back-link {
-    color: var(--color-primary);
-    text-decoration: none;
     font-size: 0.9em;
     font-family: var(--font-family-base);
-    padding: 0.5em 1em;
-    border: 2px solid var(--color-primary);
-    border-radius: 0.4em;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.back-link:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverse);
-    text-decoration: none;
 }
 
 /* ヘッダー */
@@ -544,6 +666,17 @@ h2 .initial {
     color: var(--color-text);
 }
 
+/* コンテンツコンテナ */
+.article-content {
+    font-family: var(--font-family-default);
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content p {
+    margin-bottom: 1em;
+}
+
 /* ナビゲーション */
 .article-nav {
     margin-top: 1em;
@@ -560,23 +693,11 @@ h2 .initial {
 
 /* ナビゲーションリンク共通 */
 .article-nav .nav-link {
-    color: var(--color-primary);
-    text-decoration: none;
     font-size: 0.9em;
-    padding: 0.5em 1em;
-    border: 2px solid var(--color-primary);
-    border-radius: 0.4em;
-    transition: all 0.3s ease;
     display: grid;
     align-items: center;
     min-height: 100%;
     box-sizing: border-box;
-}
-
-.article-nav .nav-link:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverse);
-    text-decoration: none;
 }
 
 /* 前の記事 */
@@ -638,6 +759,20 @@ h2 .initial {
     padding-left: 0.7em;
 }
 
+/* 記事ページ: おすすめセクション */
+.article-suggest {
+    margin-top: 1.5rem;
+}
+
+.article-suggest .suggest-label {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.article-suggest .suggest-links {
+    max-width: 100%;
+}
+
 /* ============================================
    Pagination Styles
    ============================================ */
@@ -656,20 +791,9 @@ h2 .initial {
 }
 
 .pagination-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    padding: 0.5em 1em;
-    border: 2px solid var(--color-primary);
-    border-radius: 0.4em;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5em;
-}
-
-.pagination-link:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverse);
 }
 
 .pagination-link.disabled {
@@ -707,6 +831,40 @@ h2 .initial {
 
 .pagination-total {
     opacity: 0.7;
+}
+
+/* ============================================
+   404 Page Styles
+   ============================================ */
+.error-page {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.error-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+
+.error-page hr {
+    width: 100%;
+    max-width: 300px;
+    margin: 0.5rem 0 1.5rem 0;
+    border: none;
+    border-top: 1px solid var(--color-text);
+}
+
+.error-page .error-message {
+    margin-bottom: 6rem;
+}
+
+.error-page .suggest-section {
+    max-width: 600px;
 }
 
 /* ============================================
@@ -798,8 +956,7 @@ h2 .initial {
 
     /* 画像のスタイル - モバイルでは100% */
     .article-content img,
-    .home .content img,
-    .section-content img {
+    .content-block-body img {
         max-width: 100%;
     }
 
@@ -847,82 +1004,9 @@ h2 .initial {
     .pdf-embed-container {
         margin-bottom: 1.5em;
     }
-}
 
-/* ============================================
-   PDF Embed
-   ============================================ */
-.pdf-embed-container {
-    margin: 1em 0;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.pdf-embed {
-    width: 100%;
-    height: 800px;
-    display: block;
-}
-
-/* ============================================
-   PDF Link
-   ============================================ */
-.pdf-link-container {
-    margin: 1em 0;
-}
-
-.pdf-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    padding: 0.2em 1em;
-    border: 1px solid var(--color-text);
-    border-radius: 4px;
-    text-decoration: none !important;
-    color: var(--color-text);
-    transition: all 0.3s ease;
-    background-color: var(--color-bg);
-}
-
-.pdf-link:link,
-.pdf-link:visited,
-.pdf-link:active {
-    text-decoration: none !important;
-    color: var(--color-text);
-}
-
-.pdf-link:hover {
-    background-color: var(--color-text);
-    color: var(--color-text-inverse) !important;
-    text-decoration: none !important;
-}
-
-/* ダークモードでもホバー時に色が変わるように */
-[data-theme="dark"] .pdf-link:hover {
-    background-color: var(--color-text);
-    color: var(--color-text-inverse);
-}
-
-/* ホバー時にアイコンを逆の色に変更 */
-/* ライトモード: 黒 → 白 */
-.pdf-link:hover .pdf-link-icon {
-    filter: brightness(0) invert(1);
-}
-
-/* ダークモード: 白 → 黒 */
-[data-theme="dark"] .pdf-link:hover .pdf-link-icon {
-    filter: brightness(0);
-}
-
-.pdf-link-icon {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-    transition: filter 0.3s ease;
-}
-
-.pdf-link-filename {
-    font-family: var(--font-family-base);
-    font-size: 0.9em;
+    /* Suggest Section - モバイルでは縦並び */
+    .suggest-links {
+        grid-template-columns: 1fr;
+    }
 }
