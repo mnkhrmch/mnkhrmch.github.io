@@ -6,8 +6,10 @@
     </h2>
 
     {{ if .Content }}
-    <div class="section-content">
-        {{ .Content }}
+    <div class="content-block">
+        <div class="content-block-body">
+            {{ .Content }}
+        </div>
     </div>
     {{ end }}
 
@@ -22,12 +24,12 @@
     <nav class="pagination">
         <div class="pagination-links">
             {{ if .Paginator.HasPrev }}
-            <a href="{{ .Paginator.Prev.URL }}" class="pagination-link prev-link">
+            <a href="{{ .Paginator.Prev.URL }}" class="btn-outline pagination-link prev-link">
                 <span class="pagination-arrow">&lt;</span>
                 <span class="pagination-label">前へ</span>
             </a>
             {{ else }}
-            <span class="pagination-link prev-link disabled">
+            <span class="btn-outline pagination-link prev-link disabled">
                 <span class="pagination-arrow">&lt;</span>
                 <span class="pagination-label">前へ</span>
             </span>
@@ -40,12 +42,12 @@
             </span>
 
             {{ if .Paginator.HasNext }}
-            <a href="{{ .Paginator.Next.URL }}" class="pagination-link next-link">
+            <a href="{{ .Paginator.Next.URL }}" class="btn-outline pagination-link next-link">
                 <span class="pagination-label">次へ</span>
                 <span class="pagination-arrow">&gt;</span>
             </a>
             {{ else }}
-            <span class="pagination-link next-link disabled">
+            <span class="btn-outline pagination-link next-link disabled">
                 <span class="pagination-label">次へ</span>
                 <span class="pagination-arrow">&gt;</span>
             </span>

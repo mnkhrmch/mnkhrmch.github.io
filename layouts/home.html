@@ -18,34 +18,62 @@
         </div>
         {{ end }}
     </div>
+
     {{ if .Content }}
-    <div class="content">
-        {{ .Content }}
+    <div class="content-block">
+        <h3 class="content-block-title"><span class="initial">G</span>uide</h3>
+        <div class="content-block-body markdown-content">
+            {{ .Content }}
+        </div>
     </div>
     {{ end }}
+
+    {{/* ランダムおすすめ（page-itemスタイルで4つ） */}}
+    <div class="content-block">
+        <h3 class="content-block-title"><span class="initial">お</span>すすめ</h3>
+        <div class="content-block-body">
+            <ul class="page-list" id="random-articles-home"></ul>
+        </div>
+    </div>
 
     {{/* 最近の更新を表示 */}}
     {{ $recentCount := .Site.Params.recent_posts_count | default 5 }}
     {{ $recentPages := first $recentCount (where .Site.RegularPages "Section" "!=" "") }}
     {{ if $recentPages }}
-    <div class="home-recent-updates">
-        <h3 class="recent-updates-title"><span class="initial">最</span>近の更新</h3>
-        <ul class="page-list">
-            {{ range $recentPages }}
-            {{ partial "page-item.html" . }}
-            {{ end }}
-        </ul>
+    <div class="content-block">
+        <h3 class="content-block-title"><span class="initial">最</span>近の更新</h3>
+        <div class="content-block-body">
+            <ul class="page-list">
+                {{ range $recentPages }}
+                {{ partial "page-item.html" . }}
+                {{ end }}
+            </ul>
+        </div>
     </div>
     {{ end }}
 </div>
+
+{{/* 記事データをJSに渡す */}}
+<script>
+window.SITE_ARTICLES = [
+    {{ $pages := where .Site.RegularPages "Section" "!=" "" }}
+    {{ range $index, $page := $pages }}
+    {{ if $index }},{{ end }}
+    {
+        "url": "{{ .RelPermalink }}",
+        "title": "{{ .Title | safeJS }}",
+        "section": "{{ .Section }}",
+        "date": "{{ with .Date }}{{ .Format "2006年1月2日" }}{{ end }}",
+        "datetime": "{{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}",
+        "description": "{{ with .Description }}{{ . | safeJS }}{{ end }}",
+        "summary": "{{ .Summary | plainify | truncate 100 "......" | safeJS }}"
+    }
+    {{ end }}
+];
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.renderSuggestPageItems) {
+        window.renderSuggestPageItems('random-articles-home', window.SITE_ARTICLES, 4);
+    }
+});
+</script>
 {{ end }}
-
-{{/* ホームページ専用のCSSを追加する場合 */}}
-{{/* {{ define "page_css" }}
-<link rel="stylesheet" href="/css/home.css">
-{{ end }} */}}
-
-{{/* ホームページ専用のJavaScriptを追加する場合 */}}
-{{/* {{ define "scripts" }}
-<script src="/js/home.js"></script>
-{{ end }} */}}

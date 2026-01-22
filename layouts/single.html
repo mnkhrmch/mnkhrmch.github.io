@@ -2,7 +2,7 @@
 <article class="single">
     {{ if .Section }}
     <nav class="article-back-nav">
-        <a href="{{ "/" | relURL }}{{ .Section }}/" class="nav-link back-link">&lt; 一覧に戻る</a>
+        <a href="{{ "/" | relURL }}{{ .Section }}/" class="btn-outline back-link">&lt; 一覧に戻る</a>
     </nav>
     {{ end }}
     <header class="article-header">
@@ -23,7 +23,7 @@
     <nav class="article-nav">
         <div class="article-nav-links">
             {{ if .PrevInSection }}
-            <a href="{{ .PrevInSection.RelPermalink }}" class="nav-link prev-link">
+            <a href="{{ .PrevInSection.RelPermalink }}" class="btn-outline nav-link prev-link">
                 <span class="prev-arrow">&lt;</span>
                 <span class="prev-content">
                     <span class="prev-label">前の記事</span>
@@ -32,7 +32,7 @@
             </a>
             {{ end }}
             {{ if .NextInSection }}
-            <a href="{{ .NextInSection.RelPermalink }}" class="nav-link next-link">
+            <a href="{{ .NextInSection.RelPermalink }}" class="btn-outline nav-link next-link">
                 <span class="next-content">
                     <span class="next-label">次の記事</span>
                     <span class="next-title">{{ .NextInSection.Title }}</span>
@@ -41,7 +41,41 @@
             </a>
             {{ end }}
         </div>
+
+        {{/* ランダムおすすめ */}}
+        <div class="article-suggest">
+            <p class="suggest-label">他の記事もいかがですか？</p>
+            <div class="suggest-links" id="random-articles-single"></div>
+        </div>
     </nav>
     {{ end }}
 </article>
+
+{{/* 記事データをJSに渡す */}}
+{{ $currentUrl := .RelPermalink }}
+<script>
+window.SITE_ARTICLES = window.SITE_ARTICLES || [
+    {{ $pages := where .Site.RegularPages "Section" "!=" "" }}
+    {{ range $index, $page := $pages }}
+    {{ if $index }},{{ end }}
+    {
+        "url": "{{ .RelPermalink }}",
+        "title": "{{ .Title | safeJS }}",
+        "section": "{{ .Section }}",
+        "date": "{{ with .Date }}{{ .Format "2006年1月2日" }}{{ end }}",
+        "datetime": "{{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}",
+        "description": "{{ with .Description }}{{ . | safeJS }}{{ end }}",
+        "summary": "{{ .Summary | plainify | truncate 100 "......" | safeJS }}"
+    }
+    {{ end }}
+];
+window.CURRENT_URL = "{{ $currentUrl }}";
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.renderSuggestButtons) {
+        // 現在の記事を除外
+        const filteredArticles = window.SITE_ARTICLES.filter(a => a.url !== window.CURRENT_URL);
+        window.renderSuggestButtons('random-articles-single', filteredArticles, 2);
+    }
+});
+</script>
 {{ end }}

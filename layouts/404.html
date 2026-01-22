@@ -1,0 +1,42 @@
+{{ define "main" }}
+<div class="error-page">
+    <h1>
+        <span class="initial">N</span>ot <span class="initial">F</span>ound
+    </h1>
+
+    <hr>
+
+    <p class="error-message">お探しのページは見つかりませんでした。</p>
+
+    <div class="suggest-section">
+        <p class="suggest-label">こちらの記事はいかがですか？</p>
+        <div class="suggest-links" id="random-articles-404"></div>
+    </div>
+
+    <a href="{{ "/" | relURL }}" class="btn-outline home-link">&lt; ホームに戻る</a>
+</div>
+
+{{/* 記事データをJSに渡す */}}
+<script>
+window.SITE_ARTICLES = window.SITE_ARTICLES || [
+    {{ $pages := where .Site.RegularPages "Section" "!=" "" }}
+    {{ range $index, $page := $pages }}
+    {{ if $index }},{{ end }}
+    {
+        "url": "{{ .RelPermalink }}",
+        "title": "{{ .Title | safeJS }}",
+        "section": "{{ .Section }}",
+        "date": "{{ with .Date }}{{ .Format "2006年1月2日" }}{{ end }}",
+        "datetime": "{{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}",
+        "description": "{{ with .Description }}{{ . | safeJS }}{{ end }}",
+        "summary": "{{ .Summary | plainify | truncate 100 "......" | safeJS }}"
+    }
+    {{ end }}
+];
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.renderSuggestButtons) {
+        window.renderSuggestButtons('random-articles-404', window.SITE_ARTICLES, 2);
+    }
+});
+</script>
+{{ end }}
