@@ -1,0 +1,10 @@
+{{- $showCaption := true -}}
+{{- if eq .Title "no-caption" -}}
+    {{- $showCaption = false -}}
+{{- end -}}
+<figure class="image-figure">
+    <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }}{{ if ne . "no-caption" }} title="{{ . }}"{{ end }}{{ end }}>
+    {{- if and .Text $showCaption }}
+    <figcaption>{{ .Text }}</figcaption>
+    {{- end }}
+</figure>
