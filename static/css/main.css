@@ -1009,4 +1009,13 @@ h2 .initial {
     .suggest-links {
         grid-template-columns: 1fr;
     }
+
+    /* コンテントブロック */
+    .content-block-title {
+        margin-bottom: 0.5em;
+    }
+
+    .content-block-body {
+        padding: 0em 0em 0em 0em;
+    }
 }
