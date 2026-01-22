@@ -8,6 +8,9 @@ summary_length = 100
 # ホームページで表示する最近の記事数
 recent_posts_count = 4
 
+# ページアイテムスタイルで表示するおすすめ記事数
+suggested_posts_count = 2
+
 
 # 共通CSS
 common_css = [
