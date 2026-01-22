@@ -73,3 +73,71 @@
     // グローバル関数として公開
     window.toggleTheme = toggleTheme;
 })();
+
+// ランダム記事表示機能
+(function () {
+    function shuffle(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // ボタンスタイルでランダム記事を表示（404, single用）
+    function renderSuggestButtons(containerId, articles, count = 2) {
+        const container = document.getElementById(containerId);
+        if (!container || !articles || articles.length === 0) return;
+
+        const selected = shuffle(articles).slice(0, count);
+
+        container.innerHTML = selected.map(article => `
+            <a href="${article.url}" class="btn-outline suggest-link">
+                <span class="suggest-link-content">
+                    <span class="suggest-link-label">${article.section}</span>
+                    <span class="suggest-link-title">${article.title}</span>
+                </span>
+            </a>
+        `).join('');
+    }
+
+    // page-itemスタイルでランダム記事を表示（home用）
+    function renderSuggestPageItems(containerId, articles, count = 4) {
+        const container = document.getElementById(containerId);
+        if (!container || !articles || articles.length === 0) return;
+
+        const selected = shuffle(articles).slice(0, count);
+
+        container.innerHTML = selected.map(article => {
+            const title = article.title || '';
+            const initial = title ? title.charAt(0) : '';
+            const rest = title ? title.slice(1) : '';
+            const dateHtml = (article.date && article.section !== 'diary')
+                ? `<time class="page-date"${article.datetime ? ` datetime="${article.datetime}"` : ''}>${article.date}</time>`
+                : '';
+            const descriptionHtml = article.description
+                ? `<p class="page-description">${article.description}</p>`
+                : (article.summary ? `<div class="page-description">${article.summary}</div>` : '');
+
+            return `
+                <li class="page-item">
+                    <a href="${article.url}" class="page-link">
+                        <div class="page-header">
+                            <h3 class="page-title">
+                                <span class="initial">${initial}</span>${rest}
+                            </h3>
+                            ${dateHtml}
+                        </div>
+                        <hr>
+                        ${descriptionHtml}
+                    </a>
+                </li>
+            `;
+        }).join('');
+    }
+
+    // グローバル関数として公開
+    window.renderSuggestButtons = renderSuggestButtons;
+    window.renderSuggestPageItems = renderSuggestPageItems;
+})();
