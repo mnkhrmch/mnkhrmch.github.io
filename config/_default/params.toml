@@ -6,7 +6,8 @@ background_image = "/img/limit-bg-blue.svg"
 summary_length = 100
 
 # ホームページで表示する最近の記事数
-recent_posts_count = 5
+recent_posts_count = 4
+
 
 # 共通CSS
 common_css = [
