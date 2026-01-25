@@ -76,7 +76,11 @@
 \newcommand{\gp}{\pi}
 \newcommand{\gr}{\rho}
 \newcommand{\gs}{\sigma}
-\providecommand{\gt}{\tau}
+\ifdefined\gt
+  \renewcommand{\gt}{\tau}
+\else
+  \newcommand{\gt}{\tau}
+\fi
 \newcommand{\gu}{\upsilon}
 \newcommand{\gph}{\phi}
 \newcommand{\gvph}{\varphi}

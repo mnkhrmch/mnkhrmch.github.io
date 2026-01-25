@@ -1,18 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%PACKAGES%%%%%%%%%%%%%%%%%%%%%%%%%%
 %for diagrams%
-\ifdefined\HTMLMODE
-  \usepackage{graphicx}
-\else
-  \usepackage[dvipdfmx]{graphicx}
-\fi
+\usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{tikz-cd}
-\ifdefined\HTMLMODE
-  %HTML: use tcolorbox instead of ascmac (itembox)
-  \usepackage[most]{tcolorbox}
-\else
-  \usepackage{ascmac}%for itembox etc
-\fi
+% tcolorbox removed - not compatible with tex4ht
 
 %for equations, symbols%
 \usepackage{amsmath}
@@ -27,32 +18,13 @@
 \usepackage{bm}
 \usepackage{physics}
 
-%for layout (PDF only)%
-\ifdefined\HTMLMODE
-\else
-  \usepackage{fancyhdr}%for header etc
-  \usepackage{geometry}%%used in layout for assignments, harumichi
-\fi
+%for layout%
+\usepackage{fancyhdr}%for header etc
+\usepackage{geometry}%%used in layout for assignments, harumichi
 
-%hyperlink (PDF only)%
-\ifdefined\HTMLMODE
-\else
-  \usepackage[dvipdfmx]{hyperref}%for hyperlink
-  \usepackage{pxjahyper}%a patch for hyperref in Japanese
-\fi
+%hyperlink%
+\usepackage{hyperref}%for hyperlink
 
 %for comment out%
 \usepackage{comment}
-
-%lateximage environment (for tikz-cd diagrams in HTML)
-%tex4ht defines this later, so we define a fallback at \begin{document}
-\ifdefined\HTMLMODE
-  \makeatletter
-  \AtBeginDocument{%
-    \@ifundefined{lateximage}{%
-      \newenvironment{lateximage}{}{}%
-    }{}%
-  }
-  \makeatother
-\fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%PACKAGES%%%%%%%%%%%%%%%%%%%%%%%%%%
