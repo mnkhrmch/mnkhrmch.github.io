@@ -1,0 +1,16 @@
+{{/* tex_html shortcode - Embeds converted TeX HTML content from page bundle */}}
+{{/* Usage: {{< tex_html >}} or {{< tex_html "custom-name.html" >}} */}}
+
+{{ $filename := .Get 0 | default "index.html" }}
+{{ $resource := .Page.Resources.GetMatch $filename }}
+
+{{ if $resource }}
+<div class="math-content">
+  {{ $resource.Content | safeHTML }}
+</div>
+{{ else }}
+<div class="tex-html-error">
+  <p>Error: Could not find {{ $filename }} in this page bundle.</p>
+  <p>Please ensure the TeX file has been converted to HTML.</p>
+</div>
+{{ end }}

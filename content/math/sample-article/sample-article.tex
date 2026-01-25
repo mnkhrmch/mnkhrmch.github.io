@@ -1,0 +1,395 @@
+\documentclass[a4paper,11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%input%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{luatexja}% Japanese support for LuaLaTeX
+\usepackage{luatexja-fontspec}
+\input{../../../preambles/packages.tex}
+\input{../../../preambles/theorem.tex}
+\input{../../../preambles/operators_and_letters.tex}
+\input{../../../preambles/spare.tex}
+%%%%%%%%%%%%%%%%%%%%%%%input%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%style of numbers in emumerate environment%%%%%%%%%%%%
+\renewcommand{\labelenumi}{(\arabic{enumi})} %大番号の付け方
+\renewcommand{\labelenumii}{(\roman{enumii})} %中番号の付け方
+\renewcommand{\labelenumiii}{(\alph{enumiii})}%小番号の付け方
+%%%%%%%%%%%%%style of numbers in emumerate environment%%%%%%%%%%%%
+
+%%%%%%%%%%%%%others%%%%%%%%%%%%
+\usepackage{textcomp}%右上付き丸のため
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\newcommand{\ide}{_\bbA{}^\times}
+\usepackage{mathtools}
+%%%%%%%%%%%%%others%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%title%%%%%%%%%%%%%%%%%%%%%%%%
+\title{adele環，idele群の位相}
+\author{真中遥道\\@GirlwithAHigoi}
+\date{最終更新：\today}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%title%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%content%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+\newpage
+adele環，idele群を構成し，位相の入れ方を解説する．位相空間論，位相群，位相環に関してわからないことは\S\ref{sec:abouttopspandtopgp}に必要であろう事項をまとめたので，そちらを参照されたい．また以下の記法を採用する．
+\begin{itemize}
+\item $F$を代数体とする．
+\item 位相空間$X$の位相\footnote{位相という言葉を，開集合全体の意でも使う．}を$\mathcal{O}_X$と書き，位相空間$(X,\mathcal{O}_X)$からその部分集合$Y$に入る相対位相は$\mathcal{O}_X\cap Y$と書く．\footnote{より一般に集合族$\mathcal{A}$と集合$B$に対して$\mathcal{A}\cap B=\{A\cap B\mid A\in\mathcal{A}\}$と定める．}
+\item $F$の有限素点全体を$P_{<\infty}$，無限素点全体を$P_{\infty}$，$P=P_{<\infty}\cup P_{\infty}$とおく．$p\in P$に対して$F_p$を，$F$を$p$で完備化した位相体とする．$p\in P_{<\infty}$に対して$F_p$の付値環を$J_p$とする．
+\end{itemize}
+\footnotetext[3]{$\Subset$は有限部分集合の意である．（イデアルではない）} 
+\section{adele環}
+\begin{dfn}[adele環]
+\begin{enumerate}
+\item $P_{\infty}\subseteq S\Subset P$ なる$S$に対して，位相環$F_\bbA(S)$を位相環の直積$F_\bbA(S)=\prod_{p\in S}F_{p}\times\prod_{p\in P\setminus S}J_p$で定める．\footnotemark つまり演算は各成分ごとの演算であり，位相は直積位相$\mathcal{O}_{F_\bbA(S)}$である．
+\item $F$のadele環$F_\bbA$を
+\begin{align*}
+F_\bbA=\bigcup_{P_{\infty}\subseteq S\Subset P}F_\bbA(S)
+=\Big\{(x_p)\in\prod_{p\in P}F_p\,\,\Big|\,\,\#\{p\in P\mid x_p\not\in J_p\}<\infty\Big\}
+\end{align*}
+と定める．演算は成分ごとの演算で定める．
+\item $F_\bbA$の位相$\mathcal{O}_{F_\bbA}$で，
+\begin{enumerate}
+\item $(F_\bbA,\mathcal{O}_{F_\bbA})$が位相環
+\item $F_\bbA(P_{\infty})$が開
+\item $F_\bbA(P_{\infty})$に入る相対位相と$F_\bbA(P_\infty)$の位相が一致
+\end{enumerate}
+を満たすようなものが一意的に存在する．この位相により$F_\bbA$に位相を入れ位相環とする．
+\end{enumerate}
+\end{dfn}
+演算について，$(x_p),(y_p)\in F_\bbA$に対して，$x_p+y_p,-x_p,x_py_p\not\in J_p\implies x_p\not\in J_p$または$y_p\in J_p$ゆえ，$F_\bbA$は演算で閉じており確かに環になっている．位相は$\prod_{p\in P}F_p$から入る相対位相よりも\textbf{真に強い位相}が入れられている\footnote{その理由としては，$F_\bbA$を局所コンパクトにしたいから，というのが今のところの私の理解である．}（命題\ref{prop:toppropertyofadeles}を参照）．以下の命題で挙げる$F_\bbA$の位相$\mathcal{O}_{F_\bbA}$の五つの特徴づけが理解の助けになるだろう．挙げる特徴づけについて，$\mathcal{O}_1,\mathcal{O}_2$は位相環として位相が分かりやすい．$\mathcal{O}_3,\mathcal{O}_4$は位相空間として位相が分かりやすく具体的に扱いやすい．$\mathcal{O}_5$は圏論的な特徴づけで簡潔である．
+\renewcommand{\labelenumii}{(\arabic{enumi}-\roman{enumii})} %中番号の付け方%%%%%%%%%%%%%%%%%%%%%%
+\begin{prop}\label{prop:topofadeles}
+以下の$F_\bbA$の位相$\mathcal{O}_1(=\mathcal{O}_{F_\bbA}),\mathcal{O}_2,\mathcal{O}_3,\mathcal{O}_4\subseteq 2^{F_\bbA}$は一意的に存在し，すべて一致する．
+\begin{enumerate}
+\item $\mathcal{O}_1$
+	\begin{enumerate}
+	\item $(F_\bbA,\mathcal{O}_1)$が位相環
+	\item $F_\bbA(P_{\infty})$が開
+	\item $F_\bbA(P_{\infty})$に入る相対位相と直積位相が一致
+	\end{enumerate}
+	\vspace{5mm}
+\item $\mathcal{O}_2$
+	\begin{enumerate}
+	\item 任意の$P_{\infty}\subseteq S\Subset P$で$F_\bbA(S)$が開
+	\item 任意の$P_{\infty}\subseteq S\Subset P$で$F_\bbA(S)$に入る相対位相と直積位相が一致
+	\end{enumerate}
+	\vspace{5mm}
+\item $\mathcal{O}_3$\\
+	$\mathcal{B}_3=\{\prod_{p\in S} U_p\times \prod_{p\in P\setminus S} J_p\mid P_{\infty}\subseteq S\Subset P,\forall p\in S, U_p\subseteq F_p\text{は開}\}$を開基にもつ
+	\vspace{5mm}
+\item $\mathcal{O}_4$\\
+	$\mathcal{B}_4=\bigcup_{P_{\infty}\subseteq S\Subset P}\{U\subseteq F_\bbA(S)\mid F_\bbA(S)\text{で開}\}$を開基にもつ
+	\vspace{5mm}
+\item $\mathcal{O}_5$\\
+	任意の$P_\infty\subseteq S\Subset P$に対して自然な包含写像$i_S:F_\bbA(S)\to F_\bbA$が連続になるような最も強い位相
+\end{enumerate}
+\end{prop}
+\begin{rmk}
+$\mathcal{O}_1$以外には位相環としての，つまり演算の連続性に関する条件がないが，それは条件を満たせば演算が連続になるほど，位相についての強い条件だからである．
+\end{rmk}
+\begin{rmk}[圏論的な見方]
+$\mathcal{O}_5$の条件は，圏論的には$\mathcal{O}_5$を備えた$F_\bbA$が$\{F_\bbA(S)\mid P_\infty\subseteq S\Subset P\}$の極限であるという意味である．$P_\infty\subseteq S\subseteq T\Subset P$のとき，包含写像$F_\bbA(S)\to F_\bbA(T)$は連続準同型であるので，この射によって$\{F_\bbA(S)\mid P_\infty\subseteq S\Subset P\}$は位相環の圏での図式をなす．$\mathcal{O}_5$の条件は，$F_\bbA$がこの図式の余極限，すなわち$F_\bbA=\lim_{S\rightarrow}F_\bbA(S)$であることと同値である．
+\end{rmk}
+命題\ref{prop:topofadeles}を示すために以下の補題を示す．
+\begin{lem}\label{lem:topgroup}
+可換な位相群$(H,\mathcal{O}_H)$がある可換群$G$の部分群になっているとする．このとき以下を満たす$G$の位相$\mathcal{O}_G$が一意的に存在する．
+\begin{enumerate}
+\item $(G,\mathcal{O}_G)$は位相群
+\item $H$は開
+\item $H$に入る相対位相と$H$の位相が一致
+\end{enumerate}
+\end{lem}
+\begin{proof}
+\textbf{1\textdegree}まず条件を満たす位相を構成する．$\mathcal{B}=\{g+U\mid g\in G,U\in\mathcal{O}_H\}$が開基の公理を満たすことを示す．$\bigcup\mathcal{B}=G$は明らかである．$x\in (g+U)\cap(h+V)$なら$x-g\in U,x-h\in V$ゆえ$g-x,h-x\in H$．したがって$(g-x)+U,(h-x)+V\subseteq H$は$H$の開集合であるので，
+\[
+(g+U)\cap(h+V)=x+((g-x)+U)\cap((h-x)+V)
+\]
+は$\mathcal{B}$の元であり，もちろん$(g+U)\cap(h+V)$に包まれ$x$を含む．よって$\mathcal{B}$は開基である．$\mathcal{B}$が生成する位相を$\mathcal{O}_G$とおく．\\
+\textbf{2\textdegree}次に$\mathcal{O}_G$が条件(1)-(3)を満たすことを示す．まず定義より$H\in\mathcal{B}$ゆえ(2)は満たされている．(1)を示す．加法の連続性を示す．任意に$g,h\in G$をとる．$g+h$を含む任意の開集合$W$に対して$g,h$の近傍$U,V$であって$U+V\subseteq W$なるものが存在すれば良い．\textbf{1\textdegree}と同様の議論より$-(g+h)+W$は$0(=0+0)$を含む$H$の開集合であり，$H$が位相群であることから，ある$H$での$0$の近傍$U',V'$が存在し，$U'+V'\subseteq -(g+h)+W$となる．$U=g+U',V=h+V$とおけば良い．逆元の連続性も同様である．(3)を示す．定義より$\mathcal{O}_H\subseteq \mathcal{O}_G\cap H$である．$\mathcal{O}_G\cap H\subseteq \mathcal{O}_H$を示すためには$\{B\cap H\mid B\in\mathcal{B}\}\subseteq \mathcal{O}_H$を示せば十分．$G$が$H$による剰余類の非交和であることを思い出せば，任意の$g+U\in\mathcal{B}$について，$g\in H$なら$(g+U)\subseteq H$ゆえ$(g+U)\cap H=g+U\in\mathcal{O}_H$，$g\not\in H$なら$g+U\cap H=\varnothing\in\mathcal{O}_H$である．\\
+\textbf{3\textdegree}一意性を示す．$G$の位相$\mathcal{O},\mathcal{O}'$が条件(1)-(3)を満たすとする．$H\in\mathcal{O},\mathcal{O}'$ゆえ，$(H,\mathcal{O}_H)$の$0$の近傍系は，$(G,\mathcal{O}),(G,\mathcal{O}')$での$0$の基本近傍系をなす．よって$(G,\mathcal{O}),(G,\mathcal{O}')$は同じ$0$の基本近傍系をもつため$\mathcal{O}=\mathcal{O}'$．
+\end{proof}
+\begin{proof}[\textbf{命題\ref{prop:topofadeles}の証明}]
+以下の手順で示す．
+\renewcommand{\labelenumi}{\textbf{\arabic{enumi}\textdegree}} %大番号の付け方%%%%%%%%%%%%%%%%%%5%
+\begin{enumerate}
+\item (1-i)-(1-iii)のうち乗法の連続性以外の条件を満たす$F_\bbA$の位相$\mathcal{O}_1$の存在と一意性を示す．
+\item $\mathcal{B}_3,\mathcal{B}_4$が開基の公理を満たし，$\mathcal{O}_3$と$\mathcal{O}_4$が一致することを示す．
+\item $\mathcal{O}_3=\mathcal{O}_4$が$\mathcal{O}_2$の条件を満たすことを示す．
+\item $\mathcal{O}_2$の条件を満たす位相$\mathcal{O}'$は$\mathcal{O}_1$の条件を満たすことを示す．これにより$\mathcal{O}_2$の存在と一意性，$\mathcal{O}_1=\mathcal{O}_2=\mathcal{O}_3=\mathcal{O}_4$であること，$\mathcal{O}_1$が乗法の連続性を満たすことがしたがう．
+\item $\mathcal{O}_5$の一意性を示し，$\mathcal{O}_3$が$\mathcal{O}_5$の条件を満たすことを示す．これより$\mathcal{O}_3=\mathcal{O}_5$がしたがう．
+\end{enumerate}
+\renewcommand{\labelenumi}{(\arabic{enumi})} %大番号の付け方%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{1\textdegree}補題\ref{lem:topgroup}を$G=F_\bbA,(H,\mathcal{O}_H)=(F_\bbA(P_\infty),\mathcal{O}_{F_\bbA(P_\infty)})$に適用することで，(1-i)-(1-iii)のうち乗法の連続性以外の条件を満たす$F_\bbA$の位相$\mathcal{O}_1$が一意的に存在する．\\
+\textbf{2\textdegree}$P_\infty\subseteq S\Subset P$に対して
+\[
+Ep(S)=
+\begin{cases}
+F_p&(p\in S)\\
+J_p&(p\in P\setminus S)
+\end{cases}
+\]と書くことにする．すなわち$F_\bbA(S)=\prod_{p\in P}E_p(S)$である．$\mathcal{B}_3$が開基となることを示す．まず
+\[
+\bigcup\mathcal{B}_3=\bigcup_{P_\infty\subseteq S\Subset P}\bigcup_{\gl\in\Lambda_S} \left(\prod_{p\in S}U_{\gl,p}\times\prod_{p\in P\setminus S}J_p\right)=\bigcup_{P_\infty\subseteq S\Subset P}F_\bbA(S)=F_\bbA
+\]
+である．任意に$U,V\in\mathcal{B}_3$をとり，$U\cap V\in \mathcal{B}_3$となることを示す．
+\[
+U=\prod_{p\in S}U_{p}\times \prod_{p\in P\setminus S}J_p,\quad V=\prod_{p\in T}V_{p}\times\prod_{p\in P\setminus T}J_p
+\]
+とおく．ただし$P_\infty\subseteq S,T\Subset P$で$U_p,V_p\in\mathcal{O}_{F_p}$である．
+\begin{align*}
+U\cap V =&\left(\prod_{p\in S}U_{p}\times \prod_{p\in P\setminus S}J_p\right)\cap\left(\prod_{p\in T}V_{p}\times \prod_{p\in P\setminus T}J_p\right)\\
+=&\prod_{p\in S\cap T}(U_p\cap V_p)\times \prod_{p\in S\setminus T}(U_p\cap J_p)\times\prod_{p\in T\setminus S}(J_p\cap V_p)\times\prod_{P\setminus(S\cup T)}(J_p\cap J_p)
+\end{align*}
+である．$J_p\in \mathcal{O}_{F_\bbA}$ゆえ，$U_p\cap V_p,U_p\cap J_p,J_p\cap V_p\in\mathcal{O}_{F_p}$であり，また$P_\infty \subseteq S\cup T\Subset P$．よって$U\cap V\in\mathcal{B}_3$．したがって$\mathcal{B}_3$は開基となる．次に$\mathcal{B}_4$の元の和集合全体の集合を$\mathcal{O}_4$とし，$\mathcal{O}_3=\mathcal{O}_4$を示す．これが示れば$\mathcal{B}_4$が開基となることもしたがう．$\mathcal{B}_3$は任意の$P_\infty\subseteq S\Subset P$について$F_\bbA(S)$の直積位相の標準的な開基を含むため，$\mathcal{B}_4\subseteq \mathcal{O}_3$．よって$\mathcal{O}_4\subseteq\mathcal{O}_3$．また$\mathcal{B}_3\subseteq \mathcal{B}_4$ゆえ$\mathcal{O}_3\subseteq\mathcal{O}_4$．したがって$\mathcal{O}_3=\mathcal{O}_4$．\\
+\textbf{3\textdegree}$\mathcal{O}_3=\mathcal{O}_4$が$\mathcal{O}_2$の条件を満たすことを示す．任意に$P_\infty\subseteq S\Subset P$をとる．(2-i)について$F_\bbA(S)\in\mathcal{B}_4\subseteq\mathcal{O}_4$．(2-ii)について，定義より$\mathcal{O}_{F_\bbA(S)}\subseteq \mathcal{O}_3 \cap F_\bbA(S)$である．逆を示す．任意の$U=\prod_{p\in T}U_p\times\prod_{p\in P\setminus T}J_p\in \mathcal{B}_3\,(P_\infty\subseteq T\Subset P)$について，
+\begin{align}
+\begin{aligned}\label{eq:UcapFA(S)}
+U\cap F_\bbA(S)=&\prod_{p\in S\cap T}U_p\cap F_p\times\prod_{p\in T\setminus S}U_p\cap J_p\times\prod_{p\in S\setminus T}J_p\cap F_p\times\prod_{p\in P\setminus (S\cup T)}J_p\cap J_p\\
+=&\prod_{p\in S\cap T}U_p\times\prod_{p\in T\setminus S}U_p\cap J_p\times\prod_{p\in P\setminus T}J_p.
+\end{aligned}
+\end{align}
+これと$U_p\cap J_p\in\mathcal{O}_{J_p}$より$U\cap F_\bbA(S)\in\mathcal{O}_{F_\bbA(S)}$．よって$\mathcal{B}_3\cap F_\bbA(S)\subseteq \mathcal{O}_{F_\bbA(S)}$．$\mathcal{B}_3\cap F_\bbA(S)$は$\mathcal{O}_3\cap F_\bbA(S)$の開基ゆえ$\mathcal{O}_3\cap F_\bbA(S)\subseteq \mathcal{O}_{F_\bbA(S)}$．よって(2-ii)を満たす．\\
+\textbf{4\textdegree}$\mathcal{O}_2$の条件を満たす位相$\mathcal{O}'$は$\mathcal{O}_1$の条件を満たすことを示す．$\mathcal{O}'$は明らかに(1-ii),(1-iii)を満たす．(1-i)について，任意に$x,y\in F_\bbA$をとる．ある$P_\infty\subseteq S\Subset P_\infty$が存在し$x,y\in F_\bbA(S)$となり，$F_\bbA(S)$が環ゆえ$x+y,-x,xy\in F_\bbA(S)$である．これと(1-iii)を満たすこと，$(F_\bbA(S),\mathcal{O}_{F_\bbA(S)})$が位相環であることから演算の連続性がしたがい，(1-i)を満たすことが分かる．\footnote{必要なら，位相空間の間の写像$f:X\to Z$について，「任意の点$x\in X$である$Y\subseteq X,W\subseteq Z$が存在し，相対位相で$f:Y\to W$は点$x$で連続」ならば「$f:X\to Z$は連続」を確認せよ．}\\
+\textbf{5\textdegree}任意の$P_\infty\subset S\Subset P$に対して包含写像$i_S:F_\bbA(S)\to F_\bbA$が連続となるような$F_\bbA$の位相全体の集合を$\mathfrak{O}$とおく．$\bigcup \mathfrak{O}$も先の条件を満たす$F_\bbA$の位相，つまり$\bigcup\mathfrak{O}\in\mathfrak{O}$であり，その中で最強なものである．これより$\mathcal{O}_5$は存在すれば一意的である．\textbf{3\textdegree}の式(\ref{eq:UcapFA(S)})より，${i_S}^{-1}(U)\in\mathcal{O}_{F_\bbA(S)}$ゆえ任意の$P_\infty\subseteq S\Subset P$について$i_S$は連続である．さらに，もし任意の$P_\infty\subseteq S\Subset P$で${i_S}^{-1}(U)\in \mathcal{O}_{F_\bbA(S)}$なる$U\subseteq F_\bbA$が存在すれば，${i_S}^{-1}(U)\in \mathcal{B}_3$であり，
+\[
+U=U\cap F_\bbA=U\cap \bigcup_{P\infty\subseteq S\Subset P}F_\bbA(S)=\bigcup_{P\infty\subseteq S\Subset P}{i_S}^{-1}(U)\in\mathcal{O}_3
+\]
+である．よって$\mathcal{O}_3$は$\mathcal{O}_5$の条件を満たす位相である．
+\end{proof}
+\begin{prop}[adele環の位相的性質]\label{prop:toppropertyofadeles}
+単射$F\ni x\mapsto (x)_p\in F_\bbA$により$F\subseteq F_\bbA$とみなす．
+\begin{enumerate}
+\item $\mathcal{O}_{F_\bbA}$は直積位相$\mathcal{O}_{\prod_{p\in P} F_p}$からの相対位相$\mathcal{O}_{\prod_{p\in P} F_p}\cap F_\bbA$より真に強い位相である．
+\item $F_\bbA$は局所コンパクトである．
+\item $F$は$F_\bbA$で離散的である．
+\item $F_\bbA/F$はコンパクトである．
+\end{enumerate}
+\end{prop}
+\begin{proof}
+(1)$\prod_{p\in P}F_p$の標準的な開基を$\mathcal{B}$とおくと，$\mathcal{B}\cap F_\bbA$は$\mathcal{O}_{\prod_{p\in P}F_p}\cap F_\bbA$の開基をなす．任意に$U=\prod_{p\in S}U_p\times\prod_{p\in P\setminus S}F_p\in\mathcal{B}\,(P_\infty\subseteq S\Subset P,\forall p\in S,U_p\in\mathcal{O}_{F_p})$をとる．
+\begin{align}
+U\cap F_\bbA=&U\cap \bigcup_{P_\infty\subseteq T\Subset P}F_\bbA(T)\notag\\
+=&\bigcup_{P_\infty \subseteq T\Subset P}\left(\prod_{p\in S}U_p\times\prod_{p\in P\setminus S}F_p\right)\cap\left(\prod_{p\in T}F_p\times\prod_{p\in P\setminus T}J_p\right)\notag\\
+=&\bigcup_{P_\infty \subseteq T\Subset P}\left(\prod_{p\in S\cap T}U_p\times\prod_{p\in T\setminus S}F_p\times \prod_{p\in S\setminus T}U_p\cap J_p\times\prod_{p\in P\setminus(S\cup T)}J_p\right)\label{eq:basisofreltopadele}
+\end{align}
+$J_p\in\mathcal{O}_{F_p}$ゆえ式(\ref{eq:basisofreltopadele})の各項は$\mathcal{B}_3$の元なので，$U\cap F_\bbA\in\mathcal{O}_{F_\bbA}$．よって$\mathcal{B}\cap F_\bbA\subseteq \mathcal{O}_{F_\bbA}$ゆえ$\mathcal{O}_{\prod_{p\in P}F_p}\cap F_\bbA\subseteq\mathcal{O}_{F_\bbA}$．さらに$F_\bbA(P_\infty)\in\mathcal{O}_{F_\bbA}\setminus (\mathcal{O}_{\prod_{p\in P}F_p}\cap F_\bbA)$を示す．$\mathcal{O}_{\prod_{p\in P}F_p}\cap F_\bbA$において$F_\bbA(P_\infty)$の内部$F_\bbA(P_\infty)^\circ$は$V\subseteq F_\bbA(P_\infty)$なる$V\in \mathcal{B}\cap F_\bbA$の和集合である．しかし$V$は式(\ref{eq:basisofreltopadele})のように書けるので，どの$V$に対してもある$P_\infty\subseteq T'\Subset P$と$p\in T'$が存在し，式(\ref{eq:basisofreltopadele})の表示で和の$T=T'$にあたる項の$p$成分の直積因子は$F_p$となる(式(\ref{eq:basisofreltopadele})の表示で，$P_{<\infty}\cap T'\setminus S\neq\varnothing$となるように$T'$をとったときの$p\in P_{<\infty}\cap T'\setminus S$にあたる直積因子を確認せよ)．ゆえに$V\not\subseteq F_\bbA(P_\infty)$である．したがって$F_\bbA(P_\infty)^\circ=\varnothing\neq F_\bbA(P_\infty)$，つまり$F_\bbA(P_\infty)\not\in \mathcal{O}_{\prod_{p\in P}F_p}\cap F_\bbA$．\\
+(2)0のコンパクトな近傍が存在することを示せばよい．
+\[
+D_p=
+\begin{cases}
+[-1,1]&(p\text{が実素点})\\
+\{z\in \bbC\mid |z|\leq 1\}&(p\text{が虚素点})
+\end{cases},\quad
+C=\prod_{p\in P_\infty}D_p\times\prod_{p\in P_{<\infty}}J_p
+\]
+とおく．$C\subseteq F_\bbA(P_\infty)$であり，$C$の各直積因子は空でなくコンパクトゆえ$C$は$F_\bbA(P_\infty)$のコンパクトな部分集合なので，$F_\bbA$のコンパクトな部分集合である．\footnote{$\mathcal{O}_1$の条件(1-iii)を参照せよ．この後の議論でも同様である．}さらに$F_\bbA$での$C$の内部$C^\circ$は$F_\bbA(P_\infty)$での$C$の内部と一致し，$F_\bbA(P_\infty)$の標準的な開基を考えれば
+\[
+C^\circ=\prod_{p\in P_\infty}{D_p}^\circ\times\prod_{p\in P_{<\infty}}J_p
+\]
+である．よって$0\in C^\circ$である．以上より$C$は$0$のコンパクトな近傍である．\\
+(3)（疲れたので）略．\\
+(4)（疲れたので）略．
+\end{proof}
+\section{idele群}
+$P_\infty\subseteq S\Subset P_\infty$とする．$F_\bbA(S)^\times=\prod_{p\in S}{F_p}^\times\times\prod_{p\in P\setminus S}{J_p}^\times$には$F_p,J_p$たちから標準的な位相$\mathcal{O}_{F_\bbA(S)^\times}$が定まる．\footnote{相対位相と直積位相は可換である．\S\ref{sec:abouttopspandtopgp}付録を参照せよ．}位相体$F_p$の乗法群${F_p}^\times$は位相群であり，${J_p^\times}$はその位相部分群ゆえ位相群である．位相群の直積ゆえ$(F_\bbA(S)^\times,\mathcal{O}_{F_\bbA(S)^\times})$は位相群である．
+\begin{dfn}[idele群]
+$F_\bbA$の乗法群$F\ide$を$F$のidele群という．
+\[
+F\ide=\bigcup_{P_\infty\subseteq S\Subset P}F_\bbA(S)^\times=\Big\{(x_p)\in\prod_{p\in P}F_p\times\mid \#\{p\in P\mid x_p\not\in {J_p}^\times\}<\infty\Big\}
+\]
+である．
+${F_\bbA}^\times$の位相$\mathcal{O}_{{F_\bbA}^\times}$で
+\begin{enumerate}
+\item $({F_\bbA}^\times,\mathcal{O}_{{F_\bbA}^\times})$が位相群
+\item $F_\bbA(P_\infty)^\times$が開
+\item $F_\bbA(P_\infty)^\times$に入る相対位相と$F_\bbA(P_\infty)^\times$の位相が一致
+\end{enumerate}
+を満たすようなものが一意的に存在する．この位相により$F\ide$に位相を入れ位相群とする．
+\end{dfn}
+補題\ref{lem:topgroup}より$\mathcal{O}_{F\ide}$の存在と一意性は保証される．$F_\bbA$は位相環だが位相体では（というか整域ですら）ないため，$F\ide$に$F_\bbA$から相対位相を入れても乗法逆元をとる写像が連続となるとは限らず，位相群になるとは限らない．\footnote{私がちゃんと確認していないため「とならない」ではなく「とは限らない」と書いた．}これを解消するために$F\ide$には相対位相よりも\textbf{真に強い位相}が入っている（命題\ref{prop:toppropertyofideles}を参照）．adele環の場合と同様にidele群の位相について以下のような特徴づけがある．
+\begin{prop}\label{prop:topofideles}
+以下の$F\ide$の位相$\mathcal{O}_1(=\mathcal{O}_{F\ide}),\mathcal{O}_2,\mathcal{O}_3,\mathcal{O}_4\subseteq 2^{F_\bbA}$は一意的に存在し，すべて一致する．
+\begin{enumerate}
+\item $\mathcal{O}_1$
+	\begin{enumerate}
+	\item $(F\ide,\mathcal{O}_1)$が位相群
+	\item $F_\bbA(P_{\infty})^\times$が開
+	\item $F_\bbA(P_{\infty})^\times$に入る相対位相と直積位相が一致
+	\end{enumerate}
+	\vspace{5mm}
+\item $\mathcal{O}_2$
+	\begin{enumerate}
+	\item 任意の$P_{\infty}\subseteq S\Subset P$で$F_\bbA(S)^\times$が開
+	\item 任意の$P_{\infty}\subseteq S\Subset P$で$F_\bbA(S)^\times$に入る相対位相と直積位相が一致
+	\end{enumerate}
+	\vspace{5mm}
+\item $\mathcal{O}_3$\\
+	${\mathcal{B}_3}^\times=\{\prod_{p\in S} U_p\times \prod_{p\in P\setminus S} J_p^\times\mid P_{\infty}\subseteq S\Subset P,\forall p\in S, U_p\subseteq F_p^\times\text{は開}\}$を開基にもつ
+	\vspace{5mm}
+\item $\mathcal{O}_4$\\
+	${\mathcal{B}_4}^\times=\bigcup_{P_{\infty}\subseteq S\Subset P}\{U\subseteq F_\bbA(S)^\times\mid F_\bbA(S)^\times\text{で開}\}$を開基にもつ
+	\vspace{5mm}
+\item $\mathcal{O}_5$\\
+	任意の$P_\infty\subseteq S\Subset P$に対して自然な包含写像$F_\bbA(S)^\times\to F\ide$が連続になるような最も強い位相
+\end{enumerate}
+\end{prop}
+\begin{proof}以下の手順で示せるが．\textbf{命題\ref{prop:topofadeles}の証明と全く同様}であり単に長いだけであるので，紙面の見やすさのため具体的な証明は省略する．理解のために命題\ref{prop:topofadeles}の証明を参考に自ら証明を構成することをおすすめする．
+\renewcommand{\labelenumi}{\textbf{\arabic{enumi}\textdegree}} %大番号の付け方%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+\item $\mathcal{O}_1$の条件を満たす$F_\bbA$の位相$\mathcal{O}_1$の存在と一意性を示す．
+\item ${\mathcal{B}_3}^\times,{\mathcal{B}_4}^\times$が開基の公理を満たし，$\mathcal{O}_3$と$\mathcal{O}_4$が一致することを示す．
+\item\label{item1} $\mathcal{O}_3=\mathcal{O}_4$が$\mathcal{O}_2$の条件を満たすことを示す．
+\item $\mathcal{O}_2$の条件を満たす位相は$\mathcal{O}_1$の条件を満たすことを示す．これと\textbf{\ref{item1}\textdegree}により$\mathcal{O}_2$の存在と一意性，$\mathcal{O}_1=\mathcal{O}_2=\mathcal{O}_3=\mathcal{O}_4$がしたがう．
+\item $\mathcal{O}_5$の一意性を示し，$\mathcal{O}_4$が$\mathcal{O}_5$の条件を満たすことを示す．
+\end{enumerate}
+\end{proof}
+\renewcommand{\labelenumi}{(\arabic{enumi})} %大番号の付け方%%%%%%%%%%%%%%%%%%%%
+idele群の位相的性質を見るためにいくつか定義を与える．$p\in P_{<\infty}$に対して対応する素イデアル$\fkp$による$\fkp$進絶対値を$|\cdot|_p$とおき，$p\in P_\infty$に対しては対応する埋め込み$\gs:F\to \bbC$をとり，$p$が実素点（つまり$\gs$が実埋め込み）なら$|\cdot|_p=|\gs(\cdot)|$，$p$が虚素点（つまり$\gs$が虚埋め込み）なら$|\cdot|_p=|\gs(\cdot)||\overline{\gs}(\cdot)|$とおく．adeleノルム$|\cdot|_\bbA:F\ide\to\bbR$を
+\[
+|x|_\bbA=\prod_{p\in P}|x_p|_p
+\]
+で定める．この無限積の因子はほとんど1ゆえwell-definedである．$D=\{x\in F\ide\mid |x|_\bbA=1\}$と定める．積公式より$x\in F^\times$なら$|x|_\bbA=1$ゆえ$F^\times\subseteq D$である．
+\begin{prop}[idele群の位相的性質]\label{prop:toppropertyofideles}
+\begin{enumerate}
+\item $\mathcal{O}_{F\ide}$は$\mathcal{O}_{F_\bbA}$からの相対位相$\mathcal{O}_{F_\bbA}\cap F\ide$より真に強い位相である．
+\item $F\ide$は局所コンパクトである．
+\item $F^\times$は$F\ide$で離散的である．
+\item $D/F^\times$はコンパクトである．
+\end{enumerate}
+\end{prop}
+\begin{proof}(1)(2)の証明の仕方は命題\ref{prop:toppropertyofadeles}と全く同様である．\\
+(1)$\mathcal{B}_3\cap F\ide$は$\mathcal{O}_{F_\bbA}\cap F\ide$の開基をなす．任意に$U=\prod_{p\in S}U_p\times\prod_{p\in P\setminus S}J_p\in\mathcal{B}\,(P_\infty\subseteq S\Subset P,\forall p\in S,U_p\in\mathcal{O}_{F_p})$をとる．
+\begin{align}
+U\cap F\ide=&U\cap \bigcup_{P_\infty\subseteq T\Subset P}F_\bbA(T)^\times\notag\\
+=&\bigcup_{P_\infty \subseteq T\Subset P}\left(\prod_{p\in S}U_p\times\prod_{p\in P\setminus S}F_p\right)\cap\left(\prod_{p\in T}{F_p}^\times\times\prod_{p\in P\setminus T}{J_p}^\times\right)\notag\\
+=&\bigcup_{P_\infty \subseteq T\Subset P}\left(\prod_{p\in S\cap T}U_p\cap {F_p}^\times\times\prod_{p\in T\setminus S}{F_p}^\times\times \prod_{p\in S\setminus T}U_p\cap {J_p}^\times\times\prod_{p\in P\setminus(S\cup T)}{J_p}^\times\right)\label{eq:basisofreltopidele}
+\end{align}
+${J_p}^\times\in\mathcal{O}_{{F_p}^\times}$ゆえ式(\ref{eq:basisofreltopidele})の各項は${\mathcal{B}_3}^\times$の元なので，$U\cap {F_\bbA}^\times\in\mathcal{O}_{F_\bbA}$．よって$\mathcal{B}_3\cap F\ide\subseteq \mathcal{O}_{{F_\bbA}^\times}$ゆえ$\mathcal{O}_{F_\bbA}\cap F\ide\subseteq\mathcal{O}_{F\ide}$．さらに${F_\bbA(P_\infty)}^\times\in\mathcal{O}_{F\ide}\setminus (\mathcal{O}_{F_\bbA}\cap F\ide)$を示す．$\mathcal{O}_{F_\bbA}\cap F\ide$において${F_\bbA(P_\infty)}^\times$の内部$(F_\bbA(P_\infty)^\times)^\circ$は$V\subseteq F_\bbA(P_\infty)^\times$なる$V\in \mathcal{B}_3\cap F\ide$の和集合である．しかし$V$は上式(\ref{eq:basisofreltopidele})のように書けるので，どの$V$に対してもある$P_\infty\subseteq T'\Subset P$と$p\in T'$が存在し，式(\ref{eq:basisofreltopidele})の表示で和の$T=T'$にあたる項の$p$成分の直積因子は${F_p}^\times$となる(式(\ref{eq:basisofreltopidele})の表示で，$P_{<\infty}\cap T'\setminus S\neq\varnothing$となるように$T'$をとったときの$p\in P_{<\infty}\cap T'\setminus S$にあたる直積因子を確認せよ)．ゆえに$V\not\subseteq F_\bbA(P_\infty)$である．したがって$(F_\bbA(P_\infty)^\times)^\circ=\varnothing\neq F_\bbA(P_\infty)^\times$，つまり$F_\bbA(P_\infty)^\times\not\in \mathcal{O}_{F_\bbA}\cap F\ide$．\\
+(2)1のコンパクトな近傍が存在することを示せばよい．
+\[
+D_p=
+\begin{cases}
+[1/2,3/2]&(p\text{が実素点})\\
+\{z\in \bbC\mid |z-1|\leq 1/2\}&(p\text{が虚素点})
+\end{cases},\quad
+C=\prod_{p\in P_\infty}D_p\times\prod_{p\in P_{<\infty}}{J_p}^\times
+\]
+とおく．$C\subseteq F_\bbA(P_\infty)^\times$であり，$C$の各直積因子は空でなくコンパクトゆえ$C$は$F_\bbA(P_\infty)^\times$のコンパクトな部分集合なので，$F\ide$のコンパクトな部分集合である．\footnote{$\mathcal{O}_1$の条件(1-iii)を参照せよ．この後の議論でも同様である．}さらに$F\ide$での$C$の内部$C^\circ$は$F_\bbA(P_\infty)^\times$での$C$の内部と一致し，$F_\bbA(P_\infty)^\times$の標準的な開基を考えれば
+\[
+C^\circ=\prod_{p\in P_\infty}{D_p}^\circ\times\prod_{p\in P_{<\infty}}{J_p}^\times
+\]
+である．よって$1\in C^\circ$である．以上より$C$は$1$のコンパクトな近傍である．\\
+(3)（疲れたので）略．\\
+(4)（疲れたので）略．
+\end{proof}
+\section{付録}\label{sec:abouttopspandtopgp}
+本稿を読むのに必要であろう事項を参照できるようにまとめておく．詳しくは解説しない．
+\subsection{位相空間論}
+\begin{dfn}[位相の定義]
+$X$を集合とする．以下を満たす$\mathcal{O}\subseteq 2^X$を$X$の位相という．$X$とその位相一つの組み$(X,\mathcal{O})$を位相空間といい，$\mathcal{O}$の元を開集合という．
+\begin{enumerate}
+\item $\varnothing,X\in\mathcal{O}$
+\item $U_1,U_2\in\mathcal{O}\implies U_1\cap U_2\in\mathcal{O}$
+\item $\forall \gl\in\Lambda, U_\gl\in\mathcal{O}\implies \bigcup_{\gl\in\Lambda}U_\gl\in\mathcal{O}$
+\end{enumerate}
+\end{dfn}
+以下，$(X,\mathcal{O})$を位相空間とする．
+\begin{dfn}[開基]
+集合族$\mathcal{B}\subseteq\mathcal{O}$が開基であるとは，任意の$x\in X$と$x\in U\in\mathcal{O}$に対して，ある$B\in\mathcal{B}$が存在して$x\in B\subseteq U$となることである．$\mathcal{B}$が開基なら任意の$U\in\mathcal{O}$は$\mathcal{B}$の元の和集合として書ける．
+\end{dfn}
+\begin{prop}[開基の公理]
+\begin{enumerate}
+\item $\mathcal{B}$を$X$の開基とする．このとき以下が成り立つ．
+\begin{enumerate}
+\item $\bigcup\mathcal{B}=X.$
+\item $\forall B_1,B_2\in\mathcal{B},\forall x\in B_1\cap B_2,\exists C\in\mathcal{B}, x\in C\subseteq B_1\cap B_2.$
+\end{enumerate}
+\item 単なる集合$X$の部分集合族$\mathcal{B}$であって上記の条件を満たすものが与えられているとする．このとき$\mathcal{B}$を開基とするような$X$の位相が一意的に存在する．すなわち適切に開基を定めることで位相を定義できる．
+\end{enumerate}
+\end{prop}
+(2)は具体的には$\{\bigcup_{\gl\in\Lambda}B_\gl\mid \forall \gl\in\Lambda, B_\gl\in \mathcal{B}\}$を開集合全体とする位相である．
+\begin{dfn}[相対位相，直積位相]
+\begin{enumerate}
+\item $Y\subseteq X$に対して
+\[
+\mathcal{O}\cap X=\{U\cap X\mid U\in\mathcal{O}\}
+\]
+は$Y$の位相となる．これを$(X,\mathcal{O})$から入る$Y$の相対位相という．これは包含写像$Y\to X$が連続となる最弱の位相である．
+\item 位相空間の族$\{(X_\gl,\mathcal{O}_\gl\mid \gl\in\Lambda\}$が与えられているとする．
+\[
+\mathcal{B}=\Big\{\prod_{\gl\in\Lambda}U_\gl\,\Big|\,\text{有限個の}\gl\text{を除いて}U_\gl=X_\gl\Big\}
+\]
+を開基とする位相が一意的に存在する．この位相を$\prod_{\gl\in\Lambda}X_\gl$の直積位相という．\footnotemark これは全ての射影$\prod_{\gl\in\Lambda}X_\gl\to X_\gl$が連続となるような最弱の位相である．
+\end{enumerate}
+\end{dfn}
+\footnotetext[10]{本稿では$\mathcal{B}$を直積位相の標準的な開基と呼んでいる．}
+\begin{prop}[相対位相と直積位相の可換性]
+各$\gl\in\Lambda$に対して位相空間$X_\gl$とその部分空間$A_\gl$が与えられているとする．$X_\lambda$から$A_\gl$に入れた相対位相たちの直積位相と，$\prod_{\gl\in\Lambda}X_\gl$に入る直積位相からの$\prod_{\gl\in\Lambda}A_\gl$に入れた相対位相は一致する．
+\end{prop}
+\begin{dfn}[近傍，基本近傍系]
+\begin{enumerate}
+\item $N\subseteq X$が$x\in X$の近傍であるとは，ある$U\in\mathcal{O}$が存在し$x\in U\subseteq N$となることである．
+\item $\mathcal{N}\subseteq 2^X$が$x\in X$の基本近傍系であるとは，$x$の任意の近傍$N$に対してある$M\in\mathcal{N}$が存在し$M\subseteq N$となることである．
+\end{enumerate}
+\end{dfn}
+\subsection{位相群，位相環}
+\begin{dfn}[位相群，位相環，位相体]
+\begin{enumerate}
+\item 位相を備えた群$G$であって
+\[
+G\times G\ni(x,y)\mapsto xy\in G,\quad G\ni x\mapsto x^{-1}\in G
+\]
+が連続となるようなものを位相群という．ただし$G\times G$には直積位相を入れる．
+\item 位相を備えた環$R$であって
+\[
+R\times R\ni(x,y)\mapsto x+y\in R,\quad R\ni x\mapsto -x\in R,\quad R\times R\ni(x,y)\mapsto xy\in R
+\]
+が連続となるようなものを位相環という．ただし$R\times R$には直積位相を入れる．
+\item 位相を備えた体$F$であって
+\begin{align*}
+F\times F\ni(x,y)\mapsto x+y\in F,\quad F\ni x\mapsto -x\in F,\\
+F\times F\ni(x,y)\mapsto xy\in F,\quad F\ni x\mapsto x^{-1}\in F
+\end{align*}
+が連続となるようなものを位相体という．ただし$F\times F$には直積位相を入れる．
+\end{enumerate}
+\end{dfn}
+以下，$G$を位相群，$R$を位相環，$F$を位相体とする．
+\begin{prop}[演算は同相]
+任意の$g\in G$について，
+\[
+L_g:G\ni x\mapsto gx\in G,\quad R_g:G\ni x\mapsto xg\in G,\quad \mathrm{Inv}:G\ni x\mapsto x^{-1}\in G
+\]
+とおく．これらは連続であり
+\[
+{L_{g}}^{-1}=L_{g^{-1}},{R_{g}}^{-1}=R_{g^{-1}},\mathrm{Inv}^{-1}=\mathrm{Inv}
+\]
+ゆえ，これらは全て同相写像である．
+\end{prop}
+\begin{rmk}
+位相環$R$の演算$L_r:R\ni x\mapsto rx\in R, R_r:R\ni x\mapsto xr\in R\,(r\in R)$は同相写像とは限らない．
+\end{rmk}
+\footnotetext[11]{英語でtopological subgroupゆえ部分位相群ではなく位相部分群とした．}
+\begin{dfn}[位相部分群，部分位相環，部分位相体]
+位相群の部分集合であって，相対位相を備えた部分群でそれ自身が位相群であるものを，位相部分群という．\footnotemark 位相群の任意の部分群は相対位相により常に位相部分群になる．位相環，位相体についても同様である．
+\end{dfn}
+\begin{dfn}[位相群，位相環の直積]
+\begin{enumerate}
+\item 位相群の族$\{G_\gl\mid\gl\in\Lambda\}$が与えられているとする．位相群の直積$\prod_{\gl\in\Lambda}G_\gl$に，演算を各成分ごとの演算で，位相を直積位相で定める．これは位相群となる．
+\item 位相環の族$\{R_\gl\mid\gl\in\Lambda\}$が与えられているとする．位相群の直積$\prod_{\gl\in\Lambda}R_\gl$に，演算を各成分ごとの演算で，位相を直積位相で定める．これは位相環となる．
+\end{enumerate}
+\end{dfn}
+\begin{prop}[位相群の0の基本近傍系]
+位相群$(G,\mathcal{O})$の単位元$1$の基本近傍系$\mathcal{N}_0$が与えられているとする．$G$の位相$\mathcal{O}'$が$\mathcal{N}_0$を0の基本近傍系として持ち，$(G,\mathcal{O}')が$位相群となるならば$\mathcal{O}'=\mathcal{O}$である．
+\end{prop}
+\begin{proof}
+$(G,\mathcal{O})$の各点$x\in G$について演算$L_x$が同相写像ゆえ$x$の基本近傍系として$x\mathcal{N}_0$が取れるため，$\{x\mathcal{N}_0\mid x\in G\}$は$(G,\mathcal{O})$の基本近傍系全体となる．$(G,\mathcal{O}')$でも同様に各点$x\in G$の基本近傍系として$x\mathcal{N}_0$を取れるため，$\{x\mathcal{N}_0\mid x\in G\}$が基本近傍系全体となる．同一の基本近傍系全体を持つため$\mathcal{O}'=\mathcal{O}$．
+\end{proof}
+\section*{謝辞}
+命題\ref{prop:topofadeles}などは京大数学教室同期のD.I.に教えてもらったことをまとめたものである．ありがとう．
+%%%%%%%%%%%%%%%%%%%%%content%%%%%%%%%%%%%%%%%%%%%
+%\input{thebibliography.tex}
+\end{document}
