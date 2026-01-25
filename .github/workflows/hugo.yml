@@ -29,6 +29,7 @@ jobs:
             tex4ht
             luatex
             luatexbase
+            lualatex-math
             fontspec
             amsmath
             amssymb
@@ -49,13 +50,15 @@ jobs:
             etoolbox
             xcolor
             luatexja
+            hyperref
+            fancyhdr
+            geometry
+            dvisvgm
 
       - name: Convert TeX to HTML
         run: |
-          chmod +x tex2html/build.sh
-          # Convert all .tex files that need HTML conversion
-          # Add your tex files here as needed
-          # Example: ./tex2html/build.sh content/math/csa/index.tex content/math/csa/
+          chmod +x tex/build.sh tex/convert-all.sh
+          ./tex/convert-all.sh
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
