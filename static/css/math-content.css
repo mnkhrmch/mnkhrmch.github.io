@@ -1,7 +1,7 @@
 /* CSS for LaTeX-converted HTML content */
 
-/* Theorem-like environments */
-.theorem {
+/* Theorem-like environments (from tex4ht conversion) */
+.theorem-box {
   border: 1px solid #333;
   padding: 1em;
   margin: 1em 0;
@@ -9,39 +9,41 @@
   border-radius: 4px;
 }
 
-.theorem.dfn {
+.theorem-box.dfn {
   border-left: 4px solid #2196F3;
 }
 
-.theorem.thm {
+.theorem-box.thm {
   border-left: 4px solid #4CAF50;
 }
 
-.theorem.prop {
+.theorem-box.prop {
   border-left: 4px solid #FF9800;
 }
 
-.theorem.lem {
+.theorem-box.lem {
   border-left: 4px solid #9C27B0;
 }
 
-.theorem.cor {
+.theorem-box.cor {
   border-left: 4px solid #00BCD4;
 }
 
-.theorem.eg {
+.theorem-box.fact {
+  border-left: 4px solid #795548;
+}
+
+.theorem-box.prob {
+  border-left: 4px solid #F44336;
+}
+
+.theorem-box.exr {
+  border-left: 4px solid #009688;
+}
+
+.theorem-box.egbox {
   border-left: 4px solid #795548;
   background-color: #f5f5f5;
-}
-
-.theorem.rmk {
-  border-left: 4px solid #607D8B;
-  background-color: #f5f5f5;
-}
-
-.theorem.set {
-  border-left: 4px solid #E91E63;
-  background-color: #fff3e0;
 }
 
 /* Proof environment */
@@ -52,14 +54,23 @@
   background-color: #fafafa;
 }
 
+.proof::before {
+  content: "証明.";
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
 /* Section styling */
-h2, h3, h4 {
+.math-content h2,
+.math-content h3,
+.math-content h4 {
   margin-top: 1.5em;
   margin-bottom: 0.5em;
 }
 
-/* Lists inside theorems */
-.theorem ul, .theorem ol {
+/* Lists inside theorem boxes */
+.theorem-box ul,
+.theorem-box ol {
   margin: 0.5em 0;
   padding-left: 1.5em;
 }
@@ -71,24 +82,32 @@ h2, h3, h4 {
   text-align: center;
 }
 
-.lateximage img {
+.lateximage img,
+.lateximage svg {
   max-width: 100%;
   height: auto;
 }
 
+/* MathML styling */
+math {
+  font-size: 1.1em;
+}
+
+math[display="block"] {
+  display: block;
+  margin: 1em auto;
+  text-align: center;
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  .theorem {
+  .theorem-box {
     background-color: #2a2a2a;
     border-color: #555;
   }
 
-  .theorem.eg, .theorem.rmk {
+  .theorem-box.egbox {
     background-color: #333;
-  }
-
-  .theorem.set {
-    background-color: #3a2a1a;
   }
 
   .proof {
