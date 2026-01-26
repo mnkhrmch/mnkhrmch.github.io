@@ -8,6 +8,6 @@ description: ""
 
 >　また院試体験記を書いたので、よければ院試勉強の参考にしてください。京大数学教室、RIMSの倍率などのデータも載ってます。
 >
->{{< link href="https://note.com/manaka_kamogawa/n/nc98bb8e87710" label="【院試】京大院数学教室受験記　まなか" >}}
+>{{< link href="/math/京大院数学教室受験記" label="京大院数学教室受験記 | まなか" >}}
 
 {{< pdf_view file="令和6年度京大院試解答.pdf" >}}
