@@ -362,17 +362,23 @@ h2 .initial {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4em 1em;
     margin-bottom: 0em;
 }
 
 .page-title {
     font-family: var(--font-family-base);
     margin: 0;
-    flex: 0 0 auto;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .page-date {
     flex: 0 0 auto;
+    margin-left: auto;
     font-family: var(--font-family-base);
     font-size: 0.9em;
 }
@@ -666,7 +672,13 @@ h2 .initial {
 /* ============================================
    Home Page Styles
    ============================================ */
-.home-header {
+.home {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+   .home-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -711,6 +723,13 @@ h2 .initial {
 }
 
 /* 見出しのスタイル */
+.article-content h1,
+.article-content h2,
+.markdown-content h1,
+.markdown-content h2 {
+    font-family: var(--font-family-base);
+}
+
 .article-content h3,
 .markdown-content h3 {
     margin-top: 0.5em;
@@ -770,6 +789,15 @@ h2 .initial {
 .markdown-content hr {
     margin: 1em 0;
     border: 0.5px solid var(--color-text);
+}
+
+/* ============================================
+   Section(List) Page Styles
+   ============================================ */
+.section-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1em;
 }
 
 /* ============================================
