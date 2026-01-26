@@ -1,0 +1,15 @@
+{{ $src := .Get "src" }}
+{{ if $src }}
+<div class="youtube-embed-container">
+    <iframe
+        class="youtube-embed"
+        src="{{ $src | safeURL }}"
+        title="{{ .Get "title" | default "YouTube video player" }}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+    </iframe>
+</div>
+{{ else }}
+<p style="color: red;">エラー: YouTubeのURLが指定されていません。</p>
+{{ end }}
