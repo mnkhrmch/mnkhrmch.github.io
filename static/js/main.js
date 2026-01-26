@@ -103,7 +103,7 @@
     }
 
     // page-itemスタイルでランダム記事を表示（home用）
-    function renderSuggestPageItems(containerId, articles, count = 4) {
+    function renderSuggestPageItems(containerId, articles, count = 4, showDescription = true) {
         const container = document.getElementById(containerId);
         if (!container || !articles || articles.length === 0) return;
 
@@ -116,9 +116,12 @@
             const dateHtml = (article.date && article.section !== 'diary')
                 ? `<time class="page-date"${article.datetime ? ` datetime="${article.datetime}"` : ''}>${article.date}</time>`
                 : '';
-            const descriptionHtml = article.description
-                ? `<p class="page-description">${article.description}</p>`
-                : (article.summary ? `<div class="page-description">${article.summary}</div>` : '');
+            const descriptionHtml = showDescription
+                ? (article.description
+                    ? `<p class="page-description">${article.description}</p>`
+                    : (article.summary ? `<div class="page-description">${article.summary}</div>` : ''))
+                : '';
+            const hrHtml = showDescription ? '<hr>' : '';
 
             return `
                 <li class="page-item">
@@ -129,7 +132,7 @@
                             </h3>
                             ${dateHtml}
                         </div>
-                        <hr>
+                        ${hrHtml}
                         ${descriptionHtml}
                     </a>
                 </li>

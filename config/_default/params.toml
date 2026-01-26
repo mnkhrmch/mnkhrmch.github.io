@@ -2,6 +2,9 @@ description = "真中遥道のウェブサイト"
 favicon = "/img/limit-icon-blue.svg"
 background_image = "/img/limit-bg-blue.svg"
 
+# 説明やサマリーを表示する
+show_description = true
+
 # サマリーの表示文字数
 summary_length = 100
 

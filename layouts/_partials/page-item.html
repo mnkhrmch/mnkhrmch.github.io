@@ -9,6 +9,7 @@
             <time class="page-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
             {{ end }}
         </div>
+        {{ if .Site.Params.show_description }}
         <hr>
         {{ if .Description }}
         <p class="page-description">{{ .Description }}</p>
@@ -16,6 +17,7 @@
         {{ $summaryLength := .Site.Params.summary_length | default 100 }}
         {{ $summary := .Summary | plainify | truncate $summaryLength "......" }}
         <div class="page-description">{{ $summary }}</div>
+        {{ end }}
         {{ end }}
     </a>
 </li>
