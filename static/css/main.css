@@ -429,6 +429,13 @@ h2 .initial {
 }
 
 /* ============================================
+   Components: pdf-view
+   ============================================ */
+.pdf-view-container {
+    margin: 2em 0;
+}
+
+/* ============================================
    Components: pdf-embed
    ============================================ */
 .pdf-embed-container {
@@ -464,7 +471,7 @@ h2 .initial {
     transition: all 0.3s ease;
     background-color: var(--color-bg);
     width: 100%;
-    min-height: 5em;
+    min-height: 4em;
 }
 
 .pdf-link:link,
@@ -512,7 +519,7 @@ h2 .initial {
 
 .pdf-link-download {
     font-size: 0.85em;
-    padding: 0.1em 0.6em;
+    padding: 0.4em 0.8em;
     border-radius: 0.3em;
     background-color: var(--color-text);
     color: var(--color-text-inverse);
@@ -521,6 +528,88 @@ h2 .initial {
 }
 
 .pdf-link:hover .pdf-link-download {
+    background-color: var(--color-text-inverse);
+    color: var(--color-text);
+}
+
+/* ============================================
+   Components: link
+   ============================================ */
+.link-container {
+    font-family: var(--font-family-base);
+    margin: 1em 0;
+}
+
+.link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.2em 1em;
+    border: 1px solid var(--color-text);
+    border-radius: 0.4em;
+    text-decoration: none !important;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+    background-color: var(--color-bg);
+    width: 100%;
+    min-height: 4em;
+}
+
+.link:link,
+.link:visited,
+.link:active {
+    text-decoration: none !important;
+    color: var(--color-text);
+}
+
+.link:hover {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse) !important;
+    text-decoration: none !important;
+}
+
+/* ダークモードでもホバー時に色が変わるように */
+[data-theme="dark"] .link:hover {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+}
+
+/* ホバー時にアイコンを逆の色に変更 */
+/* ライトモード: 黒 → 白 */
+.link:hover .link-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* ダークモード: 白 → 黒 */
+[data-theme="dark"] .link:hover .link-icon {
+    filter: brightness(0);
+}
+
+.link-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: filter 0.3s ease;
+}
+
+.link-filename {
+    font-size: 0.9em;
+    flex: 1;
+    text-align: left;
+}
+
+.link-open {
+    font-size: 0.85em;
+    padding: 0.4em 0.8em;
+    border-radius: 0.3em;
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.link:hover .link-open {
     background-color: var(--color-text-inverse);
     color: var(--color-text);
 }
@@ -604,7 +693,7 @@ h2 .initial {
     border: 1px solid #999;
     border-left: 4px solid #999;
     box-shadow: 0.2em 0.2em 0.3em var(--shadow-color);
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* 引用内の最後のpタグのmargin-bottomを削除 */
@@ -1036,5 +1125,9 @@ h2 .initial {
 
     .content-block-body {
         padding: 0em 0em 0em 0em;
+    }
+
+    .pdf-embed-container {
+        display: none;
     }
 }
