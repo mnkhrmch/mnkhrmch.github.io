@@ -448,6 +448,7 @@ h2 .initial {
    Components: pdf-link
    ============================================ */
 .pdf-link-container {
+    font-family: var(--font-family-base);
     margin: 1em 0;
 }
 
@@ -462,6 +463,8 @@ h2 .initial {
     color: var(--color-text);
     transition: all 0.3s ease;
     background-color: var(--color-bg);
+    width: 100%;
+    min-height: 5em;
 }
 
 .pdf-link:link,
@@ -502,8 +505,24 @@ h2 .initial {
 }
 
 .pdf-link-filename {
-    font-family: var(--font-family-base);
     font-size: 0.9em;
+    flex: 1;
+    text-align: left;
+}
+
+.pdf-link-download {
+    font-size: 0.85em;
+    padding: 0.1em 0.6em;
+    border-radius: 0.3em;
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+}
+
+.pdf-link:hover .pdf-link-download {
+    background-color: var(--color-text-inverse);
+    color: var(--color-text);
 }
 
 /* ============================================
