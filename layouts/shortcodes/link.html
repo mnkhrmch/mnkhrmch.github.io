@@ -1,0 +1,12 @@
+{{ $href := .Get "href" }}
+{{ if $href }}
+<div class="link-container">
+    <a href="{{ $href }}" class="link" target="_blank" rel="noopener">
+        <img src="/img/link-45deg.svg" alt="" class="link-icon">
+        <span class="link-filename">{{ .Get "label" | default $href }}</span>
+        <span class="link-open">{{ .Get "text" | default "開く" }}</span>
+    </a>
+</div>
+{{ else }}
+<p style="color: red;">エラー: リンク先が指定されていません。</p>
+{{ end }}
