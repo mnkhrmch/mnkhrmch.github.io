@@ -1,0 +1,18 @@
+{{ $pdf := .Page.Resources.Get (.Get "file") }}
+{{ if $pdf }}
+<div class="pdf-view-container">
+<div class="pdf-link-container">
+    <a href="{{ $pdf.RelPermalink }}" class="pdf-link" target="_blank">
+        <img src="/img/paperclip.svg" data-light-icon="/img/paperclip.svg" data-dark-icon="/img/paperclip-white.svg"
+            alt="" class="pdf-link-icon">
+        <span class="pdf-link-filename">{{ $pdf.Name }}</span>
+        <span class="pdf-link-download">{{ .Get "text" | default "ダウンロード" }}</span>
+    </a>
+</div>
+<div class="pdf-embed-container">
+    <iframe src="{{ $pdf.RelPermalink }}" class="pdf-embed" style="border: none;"></iframe>
+</div>
+</div>
+{{ else }}
+<p style="color: red;">エラー: PDFファイル "{{ .Get "file" }}" が見つかりませんでした。</p>
+{{ end }}
