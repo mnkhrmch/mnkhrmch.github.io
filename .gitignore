@@ -52,5 +52,5 @@ Temporary Items
 .cursor/
 
 # tex
-*.synctex.gz
-*.dvi
+experiment/
+samples/
