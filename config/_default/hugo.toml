@@ -1,6 +1,7 @@
 baseURL = 'https://mnkhrmch.github.io/'
 languageCode = 'ja'
 title = "Manaka's Website"
+enableRobotsTXT = true
 
 # ページネーション設定
 [pagination]
