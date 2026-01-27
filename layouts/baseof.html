@@ -13,6 +13,9 @@
     <meta name="description"
         content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.Description }}{{ . }}{{ end }}{{ end }}{{ end }}">
 
+    {{/* Google Search Console */}}
+    <meta name="google-site-verification" content="apDLCprR3wSCPcdUj6kiw0RDTIIeqXO3AxxbHSZIWdI" />
+
     {{/* Favicon */}}
     {{ if .Site.Params.favicon }}
     <link rel="icon" type="image/x-icon" href="{{ .Site.Params.favicon | relURL }}">
