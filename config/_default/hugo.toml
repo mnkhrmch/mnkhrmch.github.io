@@ -1,6 +1,6 @@
 baseURL = 'https://mnkhrmch.github.io/'
 languageCode = 'ja'
-title = "Manaka's Website"
+title = "真中遥道"
 enableRobotsTXT = true
 
 # ページネーション設定
