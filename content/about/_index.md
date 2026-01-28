@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: 2026-01-27T02:18:17+09:00
-draft: false
+draft: true
 description: ""
 ---
 ## 基本
