@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電気椅子ゲーム</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .header-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: calc(100% - 20px);
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+
+        @media (min-width: 1121px) {
+            .header-container {
+                max-width: 1100px;
+            }
+        }
+
+        h1 {
+            color: white;
+            font-size: 1.8em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: calc(100% - 20px);
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        @media (min-width: 1121px) {
+            .game-container {
+                max-width: 1100px;
+            }
+        }
+
+        .scoreboard {
+            background: #2d3436;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .scoreboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            font-family: 'Courier New', monospace;
+        }
+
+        .scoreboard-table th {
+            background: #636e72;
+            padding: 6px 4px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            border: 2px solid #2d3436;
+            min-width: 35px;
+        }
+
+        .scoreboard-table td {
+            background: #34495e;
+            padding: 8px 4px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            border: 2px solid #2d3436;
+            min-width: 35px;
+        }
+
+        .scoreboard-table tr.player-A td:first-child {
+            background: #3498db;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .scoreboard-table tr.player-B td:first-child {
+            background: #e74c3c;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .scoreboard-table td.total {
+            background: #27ae60;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .scoreboard-table td.electric {
+            color: #f1c40f;
+            font-size: 1.5em;
+        }
+
+        .scoreboard-table td.empty {
+            color: #7f8c8d;
+        }
+
+        .game-status {
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #dfe6e9;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .game-status.player-a-turn {
+            background: #3498db;
+            color: white;
+        }
+
+        .game-status.player-b-turn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .chair-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
+
+        .chair {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            border: 3px solid #5f3dc4;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .chair:hover:not(.eliminated) {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        .chair.eliminated {
+            background: #95a5a6;
+            border-color: #7f8c8d;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .chair.selected {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-color: #f39c12;
+            transform: scale(1.15);
+        }
+
+        .chair-number {
+            font-size: 1.2em;
+        }
+
+        .chair-points {
+            font-size: 0.7em;
+            margin-top: 2px;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            z-index: 100;
+        }
+
+        button {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        button:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            animation: fadeIn 0.3s;
+        }
+
+        .result-overlay.show {
+            display: flex;
+        }
+
+        .result-content {
+            text-align: center;
+            animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .result-content.success {
+            color: #00b894;
+        }
+
+        .result-content.danger {
+            color: #e67e22;
+        }
+
+        .result-icon {
+            font-size: 10em;
+            margin-bottom: 20px;
+            animation: bounce 0.8s;
+        }
+
+        .result-text {
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 0 0 20px currentColor;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .result-subtext {
+            font-size: 2em;
+            color: #f1c40f;
+            font-weight: bold;
+            text-shadow: 0 0 15px #f39c12;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .result-content.danger .result-icon {
+            animation: shake 0.8s;
+        }
+
+        .game-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .game-over.show {
+            display: flex;
+        }
+
+        .game-over-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .game-over-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+
+        .game-over-content p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: #636e72;
+        }
+
+        .rule-button {
+            position: absolute;
+            right: 10px;
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        .rule-button:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .timer-button {
+            position: absolute;
+            left: 0;
+            background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        .timer-button:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .rule-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .rule-modal.show {
+            display: flex;
+        }
+
+        .rule-modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .rule-modal-content h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2d3436;
+            text-align: center;
+        }
+
+        .rule-modal-content h3 {
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #636e72;
+            border-bottom: 2px solid #dfe6e9;
+            padding-bottom: 5px;
+        }
+
+        .rule-modal-content p,
+        .rule-modal-content ul {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        .rule-modal-content ul {
+            padding-left: 25px;
+        }
+
+        .rule-modal-content li {
+            margin-bottom: 8px;
+        }
+
+        .rule-modal-content .close-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        .rule-modal-content .close-btn:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .timer-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .timer-modal.show {
+            display: flex;
+        }
+
+        .timer-modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .timer-modal-content h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #2d3436;
+            text-align: center;
+        }
+
+        .timer-setting-group {
+            margin-bottom: 25px;
+        }
+
+        .timer-setting-group label {
+            display: block;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .timer-setting-group input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #dfe6e9;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        .timer-setting-group input[type="number"]:focus {
+            outline: none;
+            border-color: #6c5ce7;
+        }
+
+        .timer-setting-group .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timer-setting-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .timer-setting-group .checkbox-label {
+            font-size: 1em;
+            font-weight: normal;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .timer-modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .timer-modal-buttons button {
+            flex: 1;
+            padding: 15px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+            border: none;
+            color: white;
+        }
+
+        .timer-modal-buttons .save-btn {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        }
+
+        .timer-modal-buttons .cancel-btn {
+            background: linear-gradient(135deg, #636e72 0%, #95a5a6 100%);
+        }
+
+        .timer-modal-buttons button:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .timer-display {
+            background: #2d3436;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .timer-display:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .timer-display.warning {
+            background: #f39c12;
+            animation: pulse 1s infinite;
+        }
+
+        .timer-display.paused {
+            background: #95a5a6;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .start-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            color: white;
+            border: none;
+            padding: 20px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            font-weight: bold;
+            z-index: 50;
+            display: none;
+        }
+
+        .start-button.show {
+            display: block;
+        }
+
+        .start-button:hover {
+            transform: translate(-50%, -50%);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .restart-button:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .restart-button.show {
+            display: inline-block;
+        }
+
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .game-container {
+                padding: 12px;
+            }
+
+            .scoreboard {
+                padding: 8px;
+            }
+
+            .scoreboard-table th,
+            .scoreboard-table td {
+                padding: 5px 3px;
+                font-size: 0.85em;
+                min-width: 30px;
+            }
+
+            .chair-container {
+                width: 350px;
+                height: 350px;
+            }
+
+            .chair {
+                width: 55px;
+                height: 55px;
+            }
+
+            .chair-number {
+                font-size: 1.1em;
+            }
+
+            .chair-points {
+                font-size: 0.65em;
+            }
+
+            .result-icon {
+                font-size: 8em;
+            }
+
+            .result-text {
+                font-size: 2.5em;
+            }
+
+            .result-subtext {
+                font-size: 1.5em;
+            }
+
+            .rule-button {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+
+            .timer-button {
+                left: 0;
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+
+            .timer-modal-content {
+                padding: 30px;
+                max-width: 90%;
+            }
+
+            .timer-modal-content h2 {
+                font-size: 1.8em;
+            }
+
+            .timer-display {
+                font-size: 1.8em;
+            }
+
+            .start-button {
+                font-size: 1.3em;
+                padding: 18px 45px;
+            }
+
+            .rule-modal-content {
+                padding: 30px;
+            }
+
+            .rule-modal-content h2 {
+                font-size: 1.8em;
+            }
+
+            .rule-modal-content h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.3em;
+            }
+
+            .game-container {
+                padding: 10px;
+                max-height: 95vh;
+            }
+
+            .scoreboard {
+                padding: 6px;
+                margin-bottom: 8px;
+            }
+
+            .scoreboard-table th,
+            .scoreboard-table td {
+                padding: 4px 2px;
+                font-size: 0.75em;
+                min-width: 25px;
+            }
+
+            .scoreboard-table td.total {
+                font-size: 1em;
+            }
+
+            .game-status {
+                padding: 8px;
+                font-size: 0.9em;
+                margin-bottom: 8px;
+            }
+
+            .chair-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            .chair {
+                width: 48px;
+                height: 48px;
+            }
+
+            .chair-number {
+                font-size: 1em;
+            }
+
+            .chair-points {
+                font-size: 0.6em;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+
+            .controls {
+                position: static;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .result-icon {
+                font-size: 6em;
+            }
+
+            .result-text {
+                font-size: 2em;
+            }
+
+            .result-subtext {
+                font-size: 1.2em;
+            }
+
+            .game-over-content {
+                padding: 30px;
+            }
+
+            .game-over-content h2 {
+                font-size: 2em;
+            }
+
+            .game-over-content p {
+                font-size: 1.1em;
+            }
+
+            .rule-button {
+                padding: 7px 14px;
+                font-size: 0.8em;
+            }
+
+            .timer-button {
+                left: 0;
+                padding: 7px 14px;
+                font-size: 0.8em;
+            }
+
+            .timer-modal-content {
+                padding: 25px;
+                max-width: 90%;
+            }
+
+            .timer-modal-content h2 {
+                font-size: 1.5em;
+            }
+
+            .timer-display {
+                font-size: 1.5em;
+            }
+
+            .start-button {
+                font-size: 1.2em;
+                padding: 15px 35px;
+            }
+
+            .rule-modal-content {
+                padding: 25px;
+                max-width: 90%;
+            }
+
+            .rule-modal-content h2 {
+                font-size: 1.5em;
+            }
+
+            .rule-modal-content h3 {
+                font-size: 1.1em;
+            }
+
+            .rule-modal-content p,
+            .rule-modal-content ul {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.1em;
+            }
+
+            .game-container {
+                padding: 8px;
+            }
+
+            .scoreboard {
+                padding: 5px;
+                margin-bottom: 6px;
+            }
+
+            .scoreboard-table th,
+            .scoreboard-table td {
+                padding: 3px 1px;
+                font-size: 0.65em;
+                min-width: 22px;
+            }
+
+            .scoreboard-table td.total {
+                font-size: 0.9em;
+            }
+
+            .game-status {
+                padding: 6px;
+                font-size: 0.8em;
+                margin-bottom: 6px;
+            }
+
+            .chair-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .chair {
+                width: 40px;
+                height: 40px;
+            }
+
+            .chair-number {
+                font-size: 0.9em;
+            }
+
+            .chair-points {
+                font-size: 0.55em;
+            }
+
+            button {
+                padding: 10px 25px;
+                font-size: 0.9em;
+            }
+
+            .controls {
+                position: static;
+                text-align: center;
+                margin-top: 8px;
+            }
+
+            .result-icon {
+                font-size: 5em;
+            }
+
+            .result-text {
+                font-size: 1.5em;
+            }
+
+            .result-subtext {
+                font-size: 1em;
+            }
+
+            .game-over-content {
+                padding: 20px;
+            }
+
+            .game-over-content h2 {
+                font-size: 1.5em;
+            }
+
+            .game-over-content p {
+                font-size: 0.9em;
+            }
+
+            .rule-button {
+                padding: 6px 12px;
+                font-size: 0.75em;
+            }
+
+            .timer-button {
+                left: 0;
+                padding: 6px 12px;
+                font-size: 0.75em;
+            }
+
+            .timer-modal-content {
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            .timer-modal-content h2 {
+                font-size: 1.3em;
+            }
+
+            .timer-display {
+                font-size: 1.3em;
+            }
+
+            .start-button {
+                font-size: 1em;
+                padding: 12px 30px;
+            }
+
+            .rule-modal-content {
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            .rule-modal-content h2 {
+                font-size: 1.3em;
+            }
+
+            .rule-modal-content h3 {
+                font-size: 1em;
+            }
+
+            .rule-modal-content p,
+            .rule-modal-content ul {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>⚡ 電気椅子ゲーム ⚡</h1>
+        <button class="timer-button" id="timerBtn">タイマー</button>
+        <button class="rule-button" id="ruleBtn">ルール</button>
+    </div>
+
+    <div class="game-container">
+        <div class="scoreboard">
+            <table class="scoreboard-table" id="scoreboard">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="player-A" id="scoreRowA">
+                        <td>A</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="total">0</td>
+                    </tr>
+                    <tr class="player-B" id="scoreRowB">
+                        <td>B</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="empty">-</td>
+                        <td class="total">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="game-status" id="gameStatus">
+            1回表 - プレイヤー B: 電気を仕掛ける椅子を選んでください
+        </div>
+
+        <div class="timer-display" id="timerDisplay">0:30</div>
+
+        <div class="chair-container" id="chairContainer">
+            <!-- Chairs will be generated by JavaScript -->
+            <button class="start-button show" id="startGameBtn">ゲームスタート</button>
+        </div>
+
+        <div class="controls">
+            <button id="confirmBtn" disabled>選択を確定</button>
+            <button class="restart-button" id="restartBtn">もう一度プレイ</button>
+        </div>
+    </div>
+
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-content" id="resultContent">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-text" id="resultText"></div>
+            <div class="result-subtext" id="resultSubtext"></div>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <div class="game-over-content">
+            <h2 id="winnerText">ゲーム終了</h2>
+            <p id="finalScore"></p>
+            <button id="backBtn">戻る</button>
+        </div>
+    </div>
+
+    <div class="rule-modal" id="ruleModal">
+        <div class="rule-modal-content">
+            <h2>⚡ 電気椅子ゲームのルール ⚡</h2>
+
+            <h3>🎯 ゲームの概要</h3>
+            <p>2人のプレイヤーが攻撃と守備を交互に行い、12個の椅子を巡って得点を競うゲームです。</p>
+
+            <h3>🔄 1ターンの流れ</h3>
+            <p><strong>1. 守備側：</strong>電気を仕掛ける椅子を1つ選ぶ</p>
+            <p><strong>2. 攻撃側：</strong>座りたい椅子を1つ選ぶ</p>
+            <p><strong>3. 結果判定：</strong></p>
+            <ul>
+                <li><strong>✓ セーフ：</strong>電気のない椅子を選んだ → その椅子の番号分の得点をゲット！（その椅子は以降使用不可）</li>
+                <li><strong>⚡ アウト：</strong>電気のある椅子を選んだ → 現在の得点が0にリセット</li>
+            </ul>
+
+            <h3>🏆 ゲームの終了と勝利</h3>
+            <p><strong>次のいずれかでゲーム終了：</strong></p>
+            <ul>
+                <li>どちらかが<strong>40点</strong>に到達 → 到達した方の勝ち</li>
+                <li>どちらかが<strong>3回</strong>電気に当たる → 当たった方の負け</li>
+                <li>椅子が<strong>残り1個</strong>になる → 得点が高い方の勝ち</li>
+                <li><strong>8回裏</strong>が終了する → 得点が高い方の勝ち</li>
+            </ul>
+            <p>※ 同点の場合は引き分け</p>
+
+            <button class="close-btn" id="closeRuleBtn">閉じる</button>
+        </div>
+    </div>
+
+    <div class="timer-modal" id="timerModal">
+        <div class="timer-modal-content">
+            <h2>⏱ タイマー設定</h2>
+
+            <div class="timer-setting-group">
+                <label for="defenseTime">守備側の制限時間（秒）</label>
+                <input type="number" id="defenseTime" min="5" max="300" value="30">
+            </div>
+
+            <div class="timer-setting-group">
+                <label for="offenseTime">攻撃側の制限時間（秒）</label>
+                <input type="number" id="offenseTime" min="5" max="300" value="30">
+            </div>
+
+            <div class="timer-setting-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="timeoutLose">
+                    <label for="timeoutLose" class="checkbox-label">タイムオーバー時に負けになる</label>
+                </div>
+            </div>
+
+            <div class="timer-modal-buttons">
+                <button class="cancel-btn" id="cancelTimerBtn">キャンセル</button>
+                <button class="save-btn" id="saveTimerBtn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gameState = {
+            inning: 1,
+            isTop: true, // true = 表 (A攻撃), false = 裏 (B攻撃)
+            phase: 'defense', // 'defense' or 'offense'
+            scoreA: 0,
+            scoreB: 0,
+            electricA: 0,
+            electricB: 0,
+            inningScoresA: [], // Each inning score for player A (number or '⚡')
+            inningScoresB: [], // Each inning score for player B (number or '⚡')
+            eliminatedChairs: new Set(),
+            selectedChair: null,
+            trapChair: null,
+            gameEnded: false,
+            gameStarted: false
+        };
+
+        const timerSettings = {
+            defenseTime: 30,
+            offenseTime: 60,
+            timeoutLose: false
+        };
+
+        const timerState = {
+            remainingTime: 0,
+            isPaused: false,
+            timerId: null
+        };
+
+        const TOTAL_CHAIRS = 12;
+        const MAX_INNINGS = 8;
+        const WIN_SCORE = 40;
+        const MAX_ELECTRIC = 3;
+
+        // Timer functions
+        function startTimer() {
+            stopTimer();
+            const timeLimit = gameState.phase === 'defense' ? timerSettings.defenseTime : timerSettings.offenseTime;
+            timerState.remainingTime = timeLimit;
+            timerState.isPaused = false;
+
+            // Remove paused class when timer starts/restarts
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.classList.remove('paused');
+
+            updateTimerDisplay();
+            timerState.timerId = setInterval(updateTimer, 1000);
+        }
+
+        function stopTimer() {
+            if (timerState.timerId) {
+                clearInterval(timerState.timerId);
+                timerState.timerId = null;
+            }
+        }
+
+        function updateTimer() {
+            if (timerState.isPaused || gameState.gameEnded) return;
+
+            timerState.remainingTime--;
+            updateTimerDisplay();
+
+            if (timerState.remainingTime <= 0) {
+                handleTimeout();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const display = document.getElementById('timerDisplay');
+            const minutes = Math.floor(timerState.remainingTime / 60);
+            const seconds = timerState.remainingTime % 60;
+            display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timerState.remainingTime <= 10 && timerState.remainingTime > 0) {
+                display.classList.add('warning');
+            } else {
+                display.classList.remove('warning');
+            }
+        }
+
+        function toggleTimerPause() {
+            if (!gameState.gameStarted || gameState.gameEnded) return;
+            timerState.isPaused = !timerState.isPaused;
+
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerState.isPaused) {
+                timerDisplay.classList.add('paused');
+            } else {
+                timerDisplay.classList.remove('paused');
+            }
+        }
+
+        function handleTimeout() {
+            stopTimer();
+
+            if (timerSettings.timeoutLose) {
+                // タイムオーバーで負け
+                const loser = gameState.phase === 'defense' ?
+                    (gameState.isTop ? 'B' : 'A') :
+                    (gameState.isTop ? 'A' : 'B');
+                const winner = loser === 'A' ? 'B' : 'A';
+
+                showResult('danger', '⏰', 'タイムオーバー！', `プレイヤー ${loser} の負け！`);
+
+                setTimeout(() => {
+                    endGame(winner, 'timeout');
+                }, 2500);
+            } else {
+                // 何も起こらない（タイマー表示が0:00で停止）
+                updateTimerDisplay();
+            }
+        }
+
+        function init() {
+            createChairs();
+            updateDisplay();
+            // 初期タイマー表示
+            const initialTime = timerSettings.defenseTime;
+            const minutes = Math.floor(initialTime / 60);
+            const seconds = initialTime % 60;
+            document.getElementById('timerDisplay').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startGame() {
+            gameState.gameStarted = true;
+            document.getElementById('startGameBtn').classList.remove('show');
+            startTimer();
+        }
+
+        function createChairs() {
+            const container = document.getElementById('chairContainer');
+            const containerSize = container.offsetWidth;
+            const chairSize = window.innerWidth <= 480 ? 40 : window.innerWidth <= 768 ? 48 : window.innerWidth <= 1024 ? 55 : 60;
+            const radius = (containerSize / 2) - (chairSize / 2) - 10;
+            const centerX = containerSize / 2;
+            const centerY = containerSize / 2;
+
+            for (let i = 1; i <= TOTAL_CHAIRS; i++) {
+                // Place chairs like a clock face: 12 at top, 3 at right, 6 at bottom, 9 at left
+                const angle = (i % 12) * (360 / TOTAL_CHAIRS) - 90;
+                const radian = angle * Math.PI / 180;
+                const x = centerX + radius * Math.cos(radian) - (chairSize / 2);
+                const y = centerY + radius * Math.sin(radian) - (chairSize / 2);
+
+                const chair = document.createElement('div');
+                chair.className = 'chair';
+                chair.style.left = x + 'px';
+                chair.style.top = y + 'px';
+                chair.innerHTML = `
+                    <div class="chair-number">${i}</div>
+                `;
+                chair.dataset.number = i;
+                chair.addEventListener('click', () => selectChair(i));
+                container.appendChild(chair);
+            }
+        }
+
+        function selectChair(number) {
+            if (!gameState.gameStarted || gameState.gameEnded) return;
+            if (gameState.eliminatedChairs.has(number)) return;
+
+            // Clear previous selection
+            document.querySelectorAll('.chair').forEach(c => {
+                c.classList.remove('selected');
+            });
+
+            // Select new chair
+            const chair = document.querySelector(`.chair[data-number="${number}"]`);
+            chair.classList.add('selected');
+            gameState.selectedChair = number;
+
+            document.getElementById('confirmBtn').disabled = false;
+        }
+
+        function updateScoreboard() {
+            const rowA = document.getElementById('scoreRowA');
+            const rowB = document.getElementById('scoreRowB');
+
+            // Update player A scores
+            for (let i = 0; i < MAX_INNINGS; i++) {
+                const cell = rowA.cells[i + 1]; // +1 to skip player name cell
+                if (i < gameState.inningScoresA.length) {
+                    const score = gameState.inningScoresA[i];
+                    if (score === '⚡') {
+                        cell.textContent = '⚡';
+                        cell.className = 'electric';
+                    } else {
+                        cell.textContent = score;
+                        cell.className = '';
+                    }
+                } else {
+                    cell.textContent = '-';
+                    cell.className = 'empty';
+                }
+            }
+
+            // Update player B scores
+            for (let i = 0; i < MAX_INNINGS; i++) {
+                const cell = rowB.cells[i + 1]; // +1 to skip player name cell
+                if (i < gameState.inningScoresB.length) {
+                    const score = gameState.inningScoresB[i];
+                    if (score === '⚡') {
+                        cell.textContent = '⚡';
+                        cell.className = 'electric';
+                    } else {
+                        cell.textContent = score;
+                        cell.className = '';
+                    }
+                } else {
+                    cell.textContent = '-';
+                    cell.className = 'empty';
+                }
+            }
+
+            // Update totals
+            rowA.cells[MAX_INNINGS + 1].textContent = gameState.scoreA;
+            rowB.cells[MAX_INNINGS + 1].textContent = gameState.scoreB;
+        }
+
+        function updateDisplay() {
+            // Update game status
+            const inningText = `${gameState.inning}回${gameState.isTop ? '表' : '裏'}`;
+            let statusText = '';
+            let currentPlayer = '';
+
+            if (gameState.phase === 'defense') {
+                const defensePlayer = gameState.isTop ? 'B' : 'A';
+                currentPlayer = defensePlayer;
+                statusText = `${inningText} - プレイヤー ${defensePlayer}: 電気を仕掛ける椅子を選んでください`;
+            } else {
+                const offensePlayer = gameState.isTop ? 'A' : 'B';
+                currentPlayer = offensePlayer;
+                statusText = `${inningText} - プレイヤー ${offensePlayer}: 座る椅子を選んでください`;
+            }
+
+            const gameStatusElement = document.getElementById('gameStatus');
+            gameStatusElement.textContent = statusText;
+
+            // Update background color based on current player
+            gameStatusElement.classList.remove('player-a-turn', 'player-b-turn');
+            if (currentPlayer === 'A') {
+                gameStatusElement.classList.add('player-a-turn');
+            } else if (currentPlayer === 'B') {
+                gameStatusElement.classList.add('player-b-turn');
+            }
+
+            // Update eliminated chairs
+            document.querySelectorAll('.chair').forEach(chair => {
+                const num = parseInt(chair.dataset.number);
+                if (gameState.eliminatedChairs.has(num)) {
+                    chair.classList.add('eliminated');
+                }
+            });
+        }
+
+        function confirm() {
+            if (!gameState.gameStarted || gameState.gameEnded) return;
+            if (!gameState.selectedChair) return;
+
+            if (gameState.phase === 'defense') {
+                // Defense phase: set trap
+                gameState.trapChair = gameState.selectedChair;
+                gameState.phase = 'offense';
+                gameState.selectedChair = null;
+
+                // Clear selection
+                document.querySelectorAll('.chair').forEach(c => {
+                    c.classList.remove('selected');
+                });
+
+                document.getElementById('confirmBtn').disabled = true;
+                updateDisplay();
+                startTimer(); // Reset timer for offense phase
+            } else {
+                // Offense phase: sit on chair
+                processOffense();
+            }
+        }
+
+        function showResult(type, icon, text, subtext) {
+            const overlay = document.getElementById('resultOverlay');
+            const content = document.getElementById('resultContent');
+            const iconDiv = document.getElementById('resultIcon');
+            const textDiv = document.getElementById('resultText');
+            const subtextDiv = document.getElementById('resultSubtext');
+
+            content.className = 'result-content ' + type;
+            iconDiv.textContent = icon;
+            textDiv.textContent = text;
+            subtextDiv.textContent = subtext;
+
+            overlay.classList.add('show');
+
+            setTimeout(() => {
+                overlay.classList.remove('show');
+            }, 2000);
+        }
+
+        function processOffense() {
+            const selectedChair = gameState.selectedChair;
+            const trapChair = gameState.trapChair;
+            const offensePlayer = gameState.isTop ? 'A' : 'B';
+
+            if (selectedChair === trapChair) {
+                // Hit electric trap!
+                if (gameState.isTop) {
+                    gameState.scoreA = 0;
+                    gameState.electricA++;
+                    gameState.inningScoresA.push('⚡');
+                } else {
+                    gameState.scoreB = 0;
+                    gameState.electricB++;
+                    gameState.inningScoresB.push('⚡');
+                }
+
+                showResult('danger', '⚡', '電撃！', `プレイヤー ${offensePlayer} の得点が0にリセット！`);
+
+                // Update scoreboard
+                updateScoreboard();
+
+                // Check if player lost by electric
+                if ((gameState.isTop && gameState.electricA >= MAX_ELECTRIC) ||
+                    (!gameState.isTop && gameState.electricB >= MAX_ELECTRIC)) {
+                    const winner = gameState.isTop ? 'B' : 'A';
+                    setTimeout(() => endGame(winner, 'electric'), 2500);
+                    return;
+                }
+            } else {
+                // Safe! Get points
+                const points = selectedChair;
+                if (gameState.isTop) {
+                    gameState.scoreA += points;
+                    gameState.inningScoresA.push(points);
+                } else {
+                    gameState.scoreB += points;
+                    gameState.inningScoresB.push(points);
+                }
+
+                gameState.eliminatedChairs.add(selectedChair);
+
+                showResult('success', '✓', '成功！', `プレイヤー ${offensePlayer} が ${points} 点獲得！`);
+
+                // Update scoreboard
+                updateScoreboard();
+
+                // Check if player won by score
+                if ((gameState.isTop && gameState.scoreA >= WIN_SCORE) ||
+                    (!gameState.isTop && gameState.scoreB >= WIN_SCORE)) {
+                    const winner = gameState.isTop ? 'A' : 'B';
+                    setTimeout(() => endGame(winner, 'score'), 2500);
+                    return;
+                }
+
+                // Check if only one chair remains
+                if (gameState.eliminatedChairs.size >= TOTAL_CHAIRS - 1) {
+                    let winner;
+                    if (gameState.scoreA > gameState.scoreB) {
+                        winner = 'A';
+                    } else if (gameState.scoreB > gameState.scoreA) {
+                        winner = 'B';
+                    } else {
+                        winner = 'draw';
+                    }
+                    setTimeout(() => endGame(winner, 'chairs'), 2500);
+                    return;
+                }
+            }
+
+            // Move to next turn
+            setTimeout(() => {
+                nextTurn();
+            }, 2500);
+        }
+
+        function nextTurn() {
+            if (gameState.isTop) {
+                // Move from top to bottom
+                gameState.isTop = false;
+            } else {
+                // Move from bottom to next inning top
+                gameState.isTop = true;
+                gameState.inning++;
+            }
+
+            // Check if game ended by innings
+            if (gameState.inning > MAX_INNINGS) {
+                let winner;
+                if (gameState.scoreA > gameState.scoreB) {
+                    winner = 'A';
+                } else if (gameState.scoreB > gameState.scoreA) {
+                    winner = 'B';
+                } else {
+                    winner = 'draw';
+                }
+                endGame(winner, 'final');
+                return;
+            }
+
+            // Reset for next turn
+            gameState.phase = 'defense';
+            gameState.selectedChair = null;
+            gameState.trapChair = null;
+
+            document.querySelectorAll('.chair').forEach(c => {
+                c.classList.remove('selected');
+            });
+
+            document.getElementById('confirmBtn').disabled = true;
+            updateDisplay();
+            startTimer(); // Reset timer for next turn
+        }
+
+        function endGame(winner, reason) {
+            gameState.gameEnded = true;
+            stopTimer();
+
+            // Hide confirm button after game ends
+            document.getElementById('confirmBtn').style.display = 'none';
+
+            const gameOverDiv = document.getElementById('gameOver');
+            const winnerText = document.getElementById('winnerText');
+            const finalScore = document.getElementById('finalScore');
+
+            let message = '';
+            if (winner === 'draw') {
+                winnerText.textContent = '引き分け！';
+                if (reason === 'chairs') {
+                    message = `椅子が残り1個になりました！\n最終スコア - プレイヤー A: ${gameState.scoreA}点 / プレイヤー B: ${gameState.scoreB}点`;
+                } else {
+                    message = `最終スコア - プレイヤー A: ${gameState.scoreA}点 / プレイヤー B: ${gameState.scoreB}点`;
+                }
+            } else {
+                winnerText.textContent = `プレイヤー ${winner} の勝利！`;
+
+                if (reason === 'electric') {
+                    const loser = winner === 'A' ? 'B' : 'A';
+                    message = `プレイヤー ${loser} が3回電気に当たりました！`;
+                } else if (reason === 'score') {
+                    message = `${WIN_SCORE}点に先に到達しました！`;
+                } else if (reason === 'timeout') {
+                    const loser = winner === 'A' ? 'B' : 'A';
+                    message = `プレイヤー ${loser} がタイムオーバーしました！`;
+                } else if (reason === 'chairs') {
+                    message = `椅子が残り1個になりました！\n最終スコア - プレイヤー A: ${gameState.scoreA}点 / プレイヤー B: ${gameState.scoreB}点`;
+                } else {
+                    message = `最終スコア - プレイヤー A: ${gameState.scoreA}点 / プレイヤー B: ${gameState.scoreB}点`;
+                }
+            }
+
+            finalScore.textContent = message;
+            gameOverDiv.classList.add('show');
+        }
+
+        // Event listeners
+        document.getElementById('confirmBtn').addEventListener('click', confirm);
+
+        // Timer button event listener
+        document.getElementById('timerBtn').addEventListener('click', () => {
+            document.getElementById('defenseTime').value = timerSettings.defenseTime;
+            document.getElementById('offenseTime').value = timerSettings.offenseTime;
+            document.getElementById('timeoutLose').checked = timerSettings.timeoutLose;
+            document.getElementById('timerModal').classList.add('show');
+        });
+
+        // Timer modal event listeners
+        document.getElementById('saveTimerBtn').addEventListener('click', () => {
+            timerSettings.defenseTime = parseInt(document.getElementById('defenseTime').value);
+            timerSettings.offenseTime = parseInt(document.getElementById('offenseTime').value);
+            timerSettings.timeoutLose = document.getElementById('timeoutLose').checked;
+            document.getElementById('timerModal').classList.remove('show');
+
+            if (gameState.gameStarted) {
+                startTimer(); // Restart timer with new settings
+            } else {
+                // Update initial timer display
+                const initialTime = timerSettings.defenseTime;
+                const minutes = Math.floor(initialTime / 60);
+                const seconds = initialTime % 60;
+                document.getElementById('timerDisplay').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        });
+
+        document.getElementById('cancelTimerBtn').addEventListener('click', () => {
+            document.getElementById('timerModal').classList.remove('show');
+        });
+
+        // Close timer modal when clicking outside
+        document.getElementById('timerModal').addEventListener('click', (e) => {
+            if (e.target.id === 'timerModal') {
+                document.getElementById('timerModal').classList.remove('show');
+            }
+        });
+
+        // Timer display click to pause/resume
+        document.getElementById('timerDisplay').addEventListener('click', toggleTimerPause);
+
+        // Start game button
+        document.getElementById('startGameBtn').addEventListener('click', startGame);
+
+        // Back button (from game over modal)
+        document.getElementById('backBtn').addEventListener('click', () => {
+            document.getElementById('gameOver').classList.remove('show');
+            document.getElementById('restartBtn').classList.add('show');
+        });
+
+        // Restart button
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            location.reload();
+        });
+
+        // Rule modal event listeners
+        document.getElementById('ruleBtn').addEventListener('click', () => {
+            document.getElementById('ruleModal').classList.add('show');
+        });
+
+        document.getElementById('closeRuleBtn').addEventListener('click', () => {
+            document.getElementById('ruleModal').classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('ruleModal').addEventListener('click', (e) => {
+            if (e.target.id === 'ruleModal') {
+                document.getElementById('ruleModal').classList.remove('show');
+            }
+        });
+
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const container = document.getElementById('chairContainer');
+                const selectedChairNum = gameState.selectedChair;
+                container.innerHTML = '';
+                createChairs();
+
+                // Restore selected chair
+                if (selectedChairNum) {
+                    const chair = document.querySelector(`.chair[data-number="${selectedChairNum}"]`);
+                    if (chair) {
+                        chair.classList.add('selected');
+                    }
+                }
+
+                updateDisplay();
+            }, 250);
+        });
+
+        // Initialize game
+        init();
+    </script>
+</body>
+</html>
