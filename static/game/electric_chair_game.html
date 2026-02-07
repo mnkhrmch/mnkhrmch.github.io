@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,14 +46,14 @@
             color: white;
             font-size: 1.8em;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .game-container {
             background: white;
             border-radius: 20px;
             padding: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             max-width: calc(100% - 20px);
             width: 100%;
             max-height: 90vh;
@@ -72,7 +73,7 @@
             border-radius: 10px;
             padding: 10px;
             margin-bottom: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             overflow-x: auto;
             flex-shrink: 0;
         }
@@ -178,11 +179,11 @@
             transition: all 0.3s;
             font-weight: bold;
             color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .chair:hover:not(.eliminated) {
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         .chair.eliminated {
@@ -223,12 +224,12 @@
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
 
         button:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         button:disabled {
@@ -243,7 +244,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             justify-content: center;
             align-items: center;
@@ -287,11 +288,41 @@
             color: #f1c40f;
             font-weight: bold;
             text-shadow: 0 0 15px #f39c12;
+            white-space: pre-line;
+        }
+
+        .result-close-btn {
+            display: none;
+            margin-top: 28px;
+            padding: 16px 48px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .result-close-btn:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05);
+        }
+
+        .result-close-btn.show {
+            display: inline-block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes scaleIn {
@@ -299,6 +330,7 @@
                 transform: scale(0);
                 opacity: 0;
             }
+
             to {
                 transform: scale(1);
                 opacity: 1;
@@ -306,21 +338,45 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
                 transform: translateY(0);
             }
+
             40% {
                 transform: translateY(-30px);
             }
+
             60% {
                 transform: translateY(-15px);
             }
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
-            20%, 40%, 60%, 80% { transform: translateX(10px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-10px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(10px);
+            }
         }
 
         .result-content.danger .result-icon {
@@ -333,7 +389,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
@@ -349,7 +405,7 @@
             padding: 40px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         .game-over-content h2 {
@@ -375,12 +431,12 @@
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
 
         .rule-button:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .timer-button {
@@ -394,12 +450,12 @@
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
 
         .timer-button:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .rule-modal {
@@ -408,7 +464,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
@@ -426,7 +482,7 @@
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         .rule-modal-content h2 {
@@ -472,12 +528,12 @@
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
 
         .rule-modal-content .close-btn:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .timer-modal {
@@ -486,7 +542,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
@@ -502,7 +558,7 @@
             padding: 40px;
             border-radius: 20px;
             max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         .timer-modal-content h2 {
@@ -570,7 +626,7 @@
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             font-weight: bold;
             border: none;
             color: white;
@@ -585,7 +641,7 @@
         }
 
         .timer-modal-buttons button:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .timer-display {
@@ -603,7 +659,7 @@
         }
 
         .timer-display:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .timer-display.warning {
@@ -616,8 +672,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
 
         .start-button {
@@ -633,7 +696,7 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             font-weight: bold;
             z-index: 50;
             display: none;
@@ -645,7 +708,7 @@
 
         .start-button:hover {
             transform: translate(-50%, -50%);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
         }
 
         .restart-button {
@@ -657,14 +720,14 @@
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             font-weight: bold;
             margin-top: 20px;
             display: none;
         }
 
         .restart-button:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .restart-button.show {
@@ -1029,10 +1092,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header-container">
         <h1>⚡ 電気椅子ゲーム ⚡</h1>
-        <button class="timer-button" id="timerBtn">タイマー</button>
+        <button class="timer-button" id="timerBtn">オプション</button>
         <button class="rule-button" id="ruleBtn">ルール</button>
     </div>
 
@@ -1104,6 +1168,7 @@
             <div class="result-icon" id="resultIcon"></div>
             <div class="result-text" id="resultText"></div>
             <div class="result-subtext" id="resultSubtext"></div>
+            <button type="button" class="result-close-btn" id="resultCloseBtn">閉じる</button>
         </div>
     </div>
 
@@ -1166,6 +1231,13 @@
                 </div>
             </div>
 
+            <div class="timer-setting-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showTrapAfterSafe">
+                    <label for="showTrapAfterSafe" class="checkbox-label">セーフ時に相手の仕掛けた椅子を表示する</label>
+                </div>
+            </div>
+
             <div class="timer-modal-buttons">
                 <button class="cancel-btn" id="cancelTimerBtn">キャンセル</button>
                 <button class="save-btn" id="saveTimerBtn">保存</button>
@@ -1194,7 +1266,8 @@
         const timerSettings = {
             defenseTime: 30,
             offenseTime: 60,
-            timeoutLose: false
+            timeoutLose: false,
+            showTrapAfterSafe: true
         };
 
         const timerState = {
@@ -1453,23 +1526,47 @@
             }
         }
 
-        function showResult(type, icon, text, subtext) {
+        let resultDismissCallback = null;
+
+        function showResult(type, icon, text, subtext, options) {
             const overlay = document.getElementById('resultOverlay');
             const content = document.getElementById('resultContent');
             const iconDiv = document.getElementById('resultIcon');
             const textDiv = document.getElementById('resultText');
             const subtextDiv = document.getElementById('resultSubtext');
+            const closeBtn = document.getElementById('resultCloseBtn');
 
             content.className = 'result-content ' + type;
             iconDiv.textContent = icon;
             textDiv.textContent = text;
             subtextDiv.textContent = subtext;
 
-            overlay.classList.add('show');
+            const waitForClose = options && options.waitForClose;
+            resultDismissCallback = options && options.onDismiss || null;
 
-            setTimeout(() => {
-                overlay.classList.remove('show');
-            }, 2000);
+            if (waitForClose && resultDismissCallback) {
+                closeBtn.classList.add('show');
+                overlay.classList.add('show');
+                // 閉じるまで表示を維持（自動で消さない）
+            } else {
+                closeBtn.classList.remove('show');
+                overlay.classList.add('show');
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                }, 2000);
+            }
+        }
+
+        function dismissResultOverlay() {
+            const overlay = document.getElementById('resultOverlay');
+            const closeBtn = document.getElementById('resultCloseBtn');
+            overlay.classList.remove('show');
+            closeBtn.classList.remove('show');
+            if (typeof resultDismissCallback === 'function') {
+                const fn = resultDismissCallback;
+                resultDismissCallback = null;
+                fn();
+            }
         }
 
         function processOffense() {
@@ -1489,63 +1586,76 @@
                     gameState.inningScoresB.push('⚡');
                 }
 
-                showResult('danger', '⚡', '電撃！', `プレイヤー ${offensePlayer} の得点が0にリセット！`);
-
-                // Update scoreboard
                 updateScoreboard();
 
-                // Check if player lost by electric
-                if ((gameState.isTop && gameState.electricA >= MAX_ELECTRIC) ||
-                    (!gameState.isTop && gameState.electricB >= MAX_ELECTRIC)) {
-                    const winner = gameState.isTop ? 'B' : 'A';
-                    setTimeout(() => endGame(winner, 'electric'), 2500);
-                    return;
-                }
-            } else {
-                // Safe! Get points
-                const points = selectedChair;
-                if (gameState.isTop) {
-                    gameState.scoreA += points;
-                    gameState.inningScoresA.push(points);
+                const afterElectricDismiss = () => {
+                    if ((gameState.isTop && gameState.electricA >= MAX_ELECTRIC) ||
+                        (!gameState.isTop && gameState.electricB >= MAX_ELECTRIC)) {
+                        const winner = gameState.isTop ? 'B' : 'A';
+                        endGame(winner, 'electric');
+                    } else {
+                        nextTurn();
+                    }
+                };
+
+                if (timerSettings.showTrapAfterSafe) {
+                    showResult('danger', '⚡', '電撃！', `プレイヤー ${offensePlayer} の得点が0にリセット！`, {
+                        waitForClose: true,
+                        onDismiss: afterElectricDismiss
+                    });
                 } else {
-                    gameState.scoreB += points;
-                    gameState.inningScoresB.push(points);
+                    showResult('danger', '⚡', '電撃！', `プレイヤー ${offensePlayer} の得点が0にリセット！`);
+                    setTimeout(afterElectricDismiss, 2500);
                 }
+                return;
+            }
 
-                gameState.eliminatedChairs.add(selectedChair);
+            // Safe! Get points
+            const points = selectedChair;
+            if (gameState.isTop) {
+                gameState.scoreA += points;
+                gameState.inningScoresA.push(points);
+            } else {
+                gameState.scoreB += points;
+                gameState.inningScoresB.push(points);
+            }
 
-                showResult('success', '✓', '成功！', `プレイヤー ${offensePlayer} が ${points} 点獲得！`);
+            gameState.eliminatedChairs.add(selectedChair);
 
-                // Update scoreboard
-                updateScoreboard();
+            let subtext = `プレイヤー ${offensePlayer} が ${points} 点獲得！`;
+            if (timerSettings.showTrapAfterSafe) {
+                subtext += `\n相手は椅子 ${trapChair} に電気を仕掛けていました`;
+            }
 
-                // Check if player won by score
+            updateScoreboard();
+
+            const afterSafeDismiss = () => {
                 if ((gameState.isTop && gameState.scoreA >= WIN_SCORE) ||
                     (!gameState.isTop && gameState.scoreB >= WIN_SCORE)) {
                     const winner = gameState.isTop ? 'A' : 'B';
-                    setTimeout(() => endGame(winner, 'score'), 2500);
+                    endGame(winner, 'score');
                     return;
                 }
-
-                // Check if only one chair remains
                 if (gameState.eliminatedChairs.size >= TOTAL_CHAIRS - 1) {
                     let winner;
-                    if (gameState.scoreA > gameState.scoreB) {
-                        winner = 'A';
-                    } else if (gameState.scoreB > gameState.scoreA) {
-                        winner = 'B';
-                    } else {
-                        winner = 'draw';
-                    }
-                    setTimeout(() => endGame(winner, 'chairs'), 2500);
+                    if (gameState.scoreA > gameState.scoreB) winner = 'A';
+                    else if (gameState.scoreB > gameState.scoreA) winner = 'B';
+                    else winner = 'draw';
+                    endGame(winner, 'chairs');
                     return;
                 }
-            }
-
-            // Move to next turn
-            setTimeout(() => {
                 nextTurn();
-            }, 2500);
+            };
+
+            if (timerSettings.showTrapAfterSafe) {
+                showResult('success', '✓', '成功！', subtext, {
+                    waitForClose: true,
+                    onDismiss: afterSafeDismiss
+                });
+            } else {
+                showResult('success', '✓', '成功！', subtext);
+                setTimeout(afterSafeDismiss, 2500);
+            }
         }
 
         function nextTurn() {
@@ -1630,11 +1740,14 @@
         // Event listeners
         document.getElementById('confirmBtn').addEventListener('click', confirm);
 
+        document.getElementById('resultCloseBtn').addEventListener('click', dismissResultOverlay);
+
         // Timer button event listener
         document.getElementById('timerBtn').addEventListener('click', () => {
             document.getElementById('defenseTime').value = timerSettings.defenseTime;
             document.getElementById('offenseTime').value = timerSettings.offenseTime;
             document.getElementById('timeoutLose').checked = timerSettings.timeoutLose;
+            document.getElementById('showTrapAfterSafe').checked = timerSettings.showTrapAfterSafe;
             document.getElementById('timerModal').classList.add('show');
         });
 
@@ -1643,6 +1756,7 @@
             timerSettings.defenseTime = parseInt(document.getElementById('defenseTime').value);
             timerSettings.offenseTime = parseInt(document.getElementById('offenseTime').value);
             timerSettings.timeoutLose = document.getElementById('timeoutLose').checked;
+            timerSettings.showTrapAfterSafe = document.getElementById('showTrapAfterSafe').checked;
             document.getElementById('timerModal').classList.remove('show');
 
             if (gameState.gameStarted) {
@@ -1726,4 +1840,5 @@
         init();
     </script>
 </body>
+
 </html>
