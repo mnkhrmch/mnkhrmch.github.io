@@ -13,4 +13,5 @@ type: "home"
 　僕が書いたエッセイや詩の鑑賞、短歌、散文が置いてあります。（移植済み）
 ### Mathematics
 　僕が書いた数学に関する記事が置いてあります。（ほぼ移植済み）
-### <a href="/game/electric_chair_game.html" style="decoration: none;">⚡️</a>
+### Games
+- <a href="/game/electric_chair_game.html" style="text-decoration: none;">⚡️</a>
